@@ -4,13 +4,8 @@ interface Itabs {
 }
 
 
-interface Imenustate {
-    active: boolean;
-    id: number;
-    tab: number;
-}
 
-export  {
+
+export {
     Itabs,
-    Imenustate,
 }
