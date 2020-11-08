@@ -1,34 +1,41 @@
 <template>
-  <div>
-    <Menu :tabs="tabs" />
+  <div class="home">
+    <div class="todoBox">
+      <todo></todo>
+    </div>
   </div>
 </template>
 
 <script lang="ts">
-import Menu from "@/components/Menu/index.vue";
-import { defineComponent, toRefs } from "vue";
-import { db } from "@/db";
-import { Itabs } from "@/typings";
+import Todo from "@/components/Todo/index.vue";
+import { defineComponent, ref } from "vue";
 export default defineComponent({
   name: "Home",
   components: {
-    Menu,
-  },
-  setup() {
-    const tabs: Itabs[] = [
-      { id: 1, tab: "Home" },
-      { id: 2, tab: "Music" },
-      { id: 3, tab: "Center" },
-      { id: 4, tab: "Contact" },
-      { id: 5, tab: "About" },
-    ];
-
-    return {
-      tabs,
-    };
+    Todo,
   },
 });
 </script>
 
 <style lang="scss" scoped>
+.home {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+
+  .todoBtn {
+    position: absolute;
+    bottom: 50px;
+    left: 50px;
+    font-size: 20px;
+    color: rgb(192, 67, 88);
+    font-weight: 500;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    cursor: pointer;
+    &:hover {
+      color: white;
+    }
+  }
+}
 </style>

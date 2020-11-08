@@ -1,5 +1,8 @@
 <template>
-  <div :class="['menuitems', { active: tab == tabindex }]">
+  <div
+    :class="['menuitems', { active: tab == tabindex }]"
+    @click="$emit('tabchange', tab)"
+  >
     <slot />
   </div>
 </template>
@@ -31,6 +34,9 @@ export default defineComponent({
   justify-content: center;
   align-items: center;
   cursor: pointer;
+  font-size: 20px;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-weight: bold;
 }
 
 .menuitems:hover {
