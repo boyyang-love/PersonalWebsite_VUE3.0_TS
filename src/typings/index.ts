@@ -3,7 +3,12 @@ interface Itabs {
     tabName: string;
 }
 
+interface IhomeState {
+    bg: string;
+}
+
 
 export {
-    Itabs
+    Itabs,
+    IhomeState
 }

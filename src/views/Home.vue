@@ -1,16 +1,30 @@
 <template>
   <div class="home">
+    <div class="bg">
+      <img :src="bg" alt="" />
+    </div>
     <div class="BlueOcean">
-      <img src="../assets/images/Blueocean01.png" alt="" />
+      <label for="input">
+        <img src="../assets/images/Blueocean01.png" alt="" />
+        <input
+          type="file"
+          name=""
+          id="input"
+          accept="image/*"
+          ref="img"
+          @change="imgUp"
+        />
+      </label>
     </div>
     <menu-bar :tabs="tabs"></menu-bar>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent, reactive, ref, toRefs } from "vue";
 import MenuBar from "@/components/MenuBar/index.vue";
-import { Itabs } from "@/typings";
+import { IhomeState, Itabs } from "@/typings";
+import { FileUp } from "@/hooks/index.ts";
 export default defineComponent({
   name: "Home",
   components: {
@@ -40,8 +54,23 @@ export default defineComponent({
       },
     ];
 
+    const state = reactive<IhomeState>({
+      bg: require("../assets/images/鬼灭之刃蝴蝶忍4k高清电脑壁纸3840x2160_彼岸图网.jpg"),
+    });
+
+    const file = new FileUp(state);
+
+    const img: any = ref(null);
+
+    const imgUp = (): void => {
+      file.fileUpdate(img.value.files[0]);
+    };
+
     return {
+      img,
       tabs,
+      imgUp,
+      ...toRefs(state),
     };
   },
 });
@@ -54,11 +83,33 @@ export default defineComponent({
   display: flex;
   justify-content: center;
   align-items: flex-end;
-  background: url("../assets/images/2B尼尔机械纪元 厚涂画风 2B高清4k游戏壁纸_彼岸图网.jpg")
-    no-repeat;
+  // background: url("../assets/images/鬼灭之刃蝴蝶忍4k高清电脑壁纸3840x2160_彼岸图网.jpg")
+  //   no-repeat;
   background-size: cover;
   background-position: center;
   position: relative;
+
+  .bg {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    img {
+      width: 100%;
+      height: 100%;
+    }
+  }
+  .imgUp {
+    width: 15%;
+    height: 50px;
+    background-color: #fff;
+    position: absolute;
+    bottom: 90px;
+    border-radius: 10px;
+    box-shadow: 2px 2px 0 0 rgba(0, 0, 0, 0.3);
+  }
   .BlueOcean {
     width: 100%;
     position: absolute;
@@ -68,6 +119,10 @@ export default defineComponent({
       animation-iteration-count: infinite;
       animation-timing-function: ease-in-out;
       cursor: pointer;
+    }
+
+    input[type="file"] {
+      display: none;
     }
   }
 }
