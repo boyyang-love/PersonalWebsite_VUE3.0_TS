@@ -1,41 +1,88 @@
 <template>
   <div class="home">
-    <div class="todoBox">
-      <todo></todo>
+    <div class="BlueOcean">
+      <img src="../assets/images/Blueocean01.png" alt="" />
     </div>
+    <menu-bar :tabs="tabs"></menu-bar>
   </div>
 </template>
 
 <script lang="ts">
-import Todo from "@/components/Todo/index.vue";
-import { defineComponent, ref } from "vue";
+import { defineComponent } from "vue";
+import MenuBar from "@/components/MenuBar/index.vue";
+import { Itabs } from "@/typings";
 export default defineComponent({
   name: "Home",
   components: {
-    Todo,
+    MenuBar,
+  },
+  setup() {
+    const tabs: Itabs[] = [
+      {
+        tabIndex: 1,
+        tabName: "Home",
+      },
+      {
+        tabIndex: 2,
+        tabName: "Music",
+      },
+      {
+        tabIndex: 3,
+        tabName: "Center",
+      },
+      {
+        tabIndex: 4,
+        tabName: "Contact",
+      },
+      {
+        tabIndex: 5,
+        tabName: "About",
+      },
+    ];
+
+    return {
+      tabs,
+    };
   },
 });
 </script>
 
-<style lang="scss" scoped>
+<style scoped lang='scss'>
 .home {
+  width: 100%;
+  height: 100vh;
   display: flex;
   justify-content: center;
-  align-items: center;
-  flex-direction: column;
-
-  .todoBtn {
+  align-items: flex-end;
+  background: url("../assets/images/2B尼尔机械纪元 厚涂画风 2B高清4k游戏壁纸_彼岸图网.jpg")
+    no-repeat;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  .BlueOcean {
+    width: 100%;
     position: absolute;
-    bottom: 50px;
-    left: 50px;
-    font-size: 20px;
-    color: rgb(192, 67, 88);
-    font-weight: 500;
-    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-    cursor: pointer;
-    &:hover {
-      color: white;
+    img {
+      width: 20%;
+      animation: FishMove 10s ease;
+      animation-iteration-count: infinite;
+      animation-timing-function: ease-in-out;
+      cursor: pointer;
     }
+  }
+}
+
+@keyframes FishMove {
+  0% {
+    transform: translateX(0);
+  }
+
+  50% {
+    transform: translateX(1000px);
+  }
+
+  100% {
+    transform: translateX(0);
   }
 }
 </style>

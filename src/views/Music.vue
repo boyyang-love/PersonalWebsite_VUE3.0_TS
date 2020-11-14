@@ -1,18 +1,14 @@
 <template>
   <div class="music">
-    <content-box></content-box>
+    <h1>this is music page</h1>
   </div>
 </template>
 
-<script lang='ts'>
-import ContentBox from "@/components/ContentBox/index.vue";
+<script>
 import { defineComponent } from "vue";
 
 export default defineComponent({
   name: "Music",
-  components: {
-    ContentBox,
-  },
 });
 </script>
 

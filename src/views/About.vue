@@ -1,18 +1,14 @@
 <template>
   <div class="about">
-    <content-box></content-box>
+    <h1>this is about page</h1>
   </div>
 </template>
 
-<script lang='ts'>
-import ContentBox from "@/components/ContentBox/index.vue";
+<script lang="ts">
 import { defineComponent } from "vue";
 
 export default defineComponent({
   name: "About",
-  components: {
-    ContentBox,
-  },
 });
 </script>
 

@@ -1,82 +1,85 @@
 <template>
-  <div
-    class="menubar"
-    :style="{
-      'background-color': backgroundColor,
-      height: height + 'px',
-      'border-radius': borderRadius + 'px',
-      color: color,
-    }"
-  >
-    <menu-items
-      v-for="item of tabs"
-      :key="item.id"
-      :tabindex="item.id"
-      :tab="tab"
-      :borderRadius="borderRadius"
-      @click="tabChange(item.id)"
-      :active="active"
-      >{{ item.tab }}
-    </menu-items>
+  <div class="menuBar">
+    <item
+      v-for="tab of tabs"
+      :key="tab.tabIndex"
+      :tabindex="tab.tabIndex"
+      :index="index"
+      @click="tabChange(tab.tabIndex)"
+      >{{ tab.tabName }}</item
+    >
   </div>
-  <content-items v-for="item of tabs" :key="item.id" v-show="item.id === tab">
-    {{ item }}
-  </content-items>
 </template>
 
 <script lang='ts'>
-import { defineComponent, PropType, reactive, toRefs } from "vue";
-import { Imenustate, Itabs } from "@/typings";
-import MenuItems from "./MenuItems.vue";
-import ContentItems from "./ContentItems.vue";
-// interface Istate {
-//   active: boolean;
-//   id: number;
-// }
+import { Itabs } from "@/typings";
+import { defineComponent, PropType, ref } from "vue";
+import { useRouter } from "vue-router";
+import Item from "./components/item.vue";
 export default defineComponent({
   name: "MenuBar",
   components: {
-    MenuItems,
-    ContentItems,
+    Item,
   },
   props: {
     tabs: Array as PropType<Itabs[]>,
-    backgroundColor: {
-      type: String,
-      default: "#44cef6",
-    },
-    height: {
-      type: Number,
-      default: 60,
-    },
-    borderRadius: Number,
-    color: String,
   },
   setup() {
-    const MenuState: Imenustate = reactive({
-      active: false,
-      id: 1,
-      tab: 1,
-    });
-    const tabChange = (id: number): void => {
-      console.log(id);
-      MenuState.tab = id;
+    const index = ref<number>(0);
+    // 路由
+    const router = useRouter();
+    const tabChange = (tabIndex: number): void => {
+      index.value = tabIndex;
+      switch (tabIndex) {
+        case 1:
+          router.push({
+            name: "Home",
+          });
+          break;
+        case 2:
+          router.push({
+            name: "Music",
+          });
+          break;
+        case 3:
+          router.push({
+            name: "Center",
+          });
+          break;
+        case 4:
+          router.push({
+            name: "Contact",
+          });
+          break;
+        case 5:
+          router.push({
+            name: "About",
+          });
+          break;
+      }
     };
 
     return {
+      index,
       tabChange,
-      ...toRefs(MenuState),
     };
   },
 });
 </script>
 
 <style scoped lang='scss'>
-.menubar {
-  width: 100%;
+.menuBar {
+  width: 80%;
+  height: 10vh;
+  background-color: rgba(23, 124, 176, 0.5);
+  border-radius: 15px;
+  box-shadow: 0 2px 3px 0 rgba(2, 2, 2, 0.5);
+  margin-bottom: 25px;
+  position: relative;
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
   align-items: center;
+  cursor: pointer;
   overflow: hidden;
 }
 </style>

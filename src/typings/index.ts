@@ -1,17 +1,9 @@
 interface Itabs {
-    tab: string;
-    id: number;
+    tabIndex: number;
+    tabName: string;
 }
-
-interface ItodoList {
-    id: number;
-    content: string;
-}
-
-
 
 
 export {
-    Itabs,
-    ItodoList
+    Itabs
 }
