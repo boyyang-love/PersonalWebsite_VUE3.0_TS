@@ -14,7 +14,7 @@
 <script lang='ts'>
 import { Itabs } from "@/typings";
 import { defineComponent, PropType, ref } from "vue";
-import { useRouter } from "vue-router";
+import { Router, useRouter } from "vue-router";
 import Item from "./components/item.vue";
 import { Login } from "@/hooks/index.ts";
 export default defineComponent({
@@ -28,7 +28,7 @@ export default defineComponent({
   setup() {
     const index = ref<number>(0);
     // 路由
-    const router = useRouter();
+    const router: Router = useRouter();
     // 登录状态
     const login = new Login();
     // tab change
