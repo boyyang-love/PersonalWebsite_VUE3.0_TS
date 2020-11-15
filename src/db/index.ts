@@ -12,4 +12,4 @@ auth.anonymousAuthProvider().signIn();
 
 const db = app.database();
 
-export { db, app, auth }
+export { app, auth, db }

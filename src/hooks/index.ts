@@ -1,5 +1,6 @@
-import { db, app, auth } from '@/db/index.ts'
+import { app, db, auth } from '@/db/index.ts'
 import { IhomeState } from '@/typings';
+
 
 // 文件上传
 class FileUp {
@@ -56,7 +57,7 @@ class Login {
     }
     // 注销
     signout() {
-        console.log(11)
+        auth.signOut()
     }
     // 登录状态判断
     async isLogin(): Promise<string | undefined> {
@@ -73,7 +74,10 @@ class Login {
         if (res?.isWeixinAuth) {
             return 'isWeixinAuth'
         }
-        return '未登录'
+        if (res) {
+            return 'hasLogin'
+        }
+
     }
 }
 

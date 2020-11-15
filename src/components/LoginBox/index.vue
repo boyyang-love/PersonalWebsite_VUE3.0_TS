@@ -35,7 +35,7 @@
 <script lang='ts'>
 import { IloginState } from "@/typings";
 import { defineComponent, reactive, toRefs } from "vue";
-
+import { Login } from "@/hooks/index.ts";
 export default defineComponent({
   name: "LoginBox",
   setup() {
@@ -48,6 +48,7 @@ export default defineComponent({
 
     const emailReg = /^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
     const passwordReg = /^.{6,16}$/;
+    const login = new Login();
 
     // 登录或注册事件
     const submit = (): void => {
@@ -59,7 +60,7 @@ export default defineComponent({
           passwordReg.test(state.password.trim()) &&
           state.password == state.repassword
         ) {
-          console.log("zc");
+          login.singup(state.account, state.password);
         }
       } else {
         //登录
@@ -67,7 +68,7 @@ export default defineComponent({
           emailReg.test(state.account.trim()) &&
           passwordReg.test(state.password.trim())
         ) {
-          console.log("dl");
+          login.singin(state.account, state.password);
         }
       }
     };
