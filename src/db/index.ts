@@ -10,8 +10,6 @@ const auth = app.auth({
 
 auth.anonymousAuthProvider().signIn();
 
-const login = auth.hasLoginState()
-console.log(login)
 const db = app.database();
 
-export { db, app }
+export { db, app, auth }

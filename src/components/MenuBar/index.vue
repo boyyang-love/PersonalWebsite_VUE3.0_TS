@@ -16,6 +16,7 @@ import { Itabs } from "@/typings";
 import { defineComponent, PropType, ref } from "vue";
 import { useRouter } from "vue-router";
 import Item from "./components/item.vue";
+import { Login } from "@/hooks/index.ts";
 export default defineComponent({
   name: "MenuBar",
   components: {
@@ -28,6 +29,9 @@ export default defineComponent({
     const index = ref<number>(0);
     // 路由
     const router = useRouter();
+    // 登录状态
+    const login = new Login();
+    // tab change
     const tabChange = (tabIndex: number): void => {
       index.value = tabIndex;
       switch (tabIndex) {
@@ -42,9 +46,20 @@ export default defineComponent({
           });
           break;
         case 3:
-          router.push({
-            name: "Center",
-          });
+          {
+            login.isLogin().then((res) => {
+              //未登录或者匿名登录都需要注册才可以进入
+              if (res == "AnonymousAuth" || res == "未登录") {
+                router.push({
+                  name: "Login",
+                });
+              } else {
+                router.push({
+                  name: "Center",
+                });
+              }
+            });
+          }
           break;
         case 4:
           router.push({

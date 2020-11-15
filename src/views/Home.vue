@@ -24,7 +24,7 @@
 import { defineComponent, reactive, ref, toRefs } from "vue";
 import MenuBar from "@/components/MenuBar/index.vue";
 import { IhomeState, Itabs } from "@/typings";
-import { FileUp } from "@/hooks/index.ts";
+import { FileUp, Login } from "@/hooks/index.ts";
 export default defineComponent({
   name: "Home",
   components: {
@@ -56,9 +56,12 @@ export default defineComponent({
 
     const state = reactive<IhomeState>({
       bg: require("../assets/images/鬼灭之刃蝴蝶忍4k高清电脑壁纸3840x2160_彼岸图网.jpg"),
+      id: "1",
+      fileID: "1",
     });
 
     const file = new FileUp(state);
+    // const login = new Login();
 
     const img: any = ref(null);
 
@@ -83,11 +86,6 @@ export default defineComponent({
   display: flex;
   justify-content: center;
   align-items: flex-end;
-  // background: url("../assets/images/鬼灭之刃蝴蝶忍4k高清电脑壁纸3840x2160_彼岸图网.jpg")
-  //   no-repeat;
-  background-size: cover;
-  background-position: center;
-  position: relative;
 
   .bg {
     width: 100%;
@@ -99,6 +97,7 @@ export default defineComponent({
     img {
       width: 100%;
       height: 100%;
+      object-fit: cover;
     }
   }
   .imgUp {

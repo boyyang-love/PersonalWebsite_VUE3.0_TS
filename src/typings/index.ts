@@ -4,11 +4,21 @@ interface Itabs {
 }
 
 interface IhomeState {
-    bg: string;
+    bg: any;
+    id: string;
+    fileID: string;
+}
+
+interface IloginState {
+    account: string;
+    password: string;
+    repassword: string;
+    loginStatus: boolean;
 }
 
 
 export {
     Itabs,
-    IhomeState
+    IhomeState,
+    IloginState
 }
