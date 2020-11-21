@@ -16,9 +16,16 @@ interface IloginState {
     loginStatus: boolean;
 }
 
+// left-navbar
+
+interface Inavbar {
+    name: string;
+    id: number;
+}
 
 export {
     Itabs,
     IhomeState,
-    IloginState
+    IloginState,
+    Inavbar
 }

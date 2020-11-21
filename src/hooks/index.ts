@@ -42,41 +42,63 @@ class FileUp {
 }
 // 登录注册
 class Login {
-
     // 登录
-    singin(email: string, password: string) {
-        auth.signInWithEmailAndPassword(email, password).then((res) => {
-            console.log(res)
+    singin(email: string, password: string): Promise<string> {
+        return new Promise((resolve, reject) => {
+            db.collection('users').where({ email: email }).get().then((res) => {
+                if (res.data.length == 0) {
+                    resolve('不存在该用户,请注册')
+                } else {
+                    auth.signInWithEmailAndPassword(email, password).then(() => {
+                        resolve('登录成功')
+                    }).catch(() => {
+                        reject('账号或密码错误')
+                    })
+                }
+            })
         })
     }
     // 注册
-    singup(email: string, password: string) {
-        auth.signUpWithEmailAndPassword(email, password).then((res) => {
-            console.log(res)
+    singup(email: string, password: string): Promise<string> {
+        return new Promise((resolve, reject) => {
+            db.collection('users').where({ email: email }).get().then((res) => {
+                if (res.data.length == 0) {
+                    auth.signUpWithEmailAndPassword(email, password).then(() => {
+                        db.collection('users').add({
+                            name: '',
+                            age: '',
+                            gender: '',
+                            email: email,
+                            backgroundImage: '',
+                            phoneNumber: '',
+                            qqNumber: '',
+                            wechat: ''
+                        }).then(() => {
+                            resolve('注册成功')
+                        })
+                    }).catch(() => {
+                        reject('注册失败')
+                    })
+                } else {
+                    resolve('该账号已经注册过')
+                }
+            })
+
         })
     }
     // 注销
-    signout() {
+    signout(): void {
         auth.signOut()
     }
     // 登录状态判断
-    async isLogin(): Promise<string | undefined> {
-        const res = await auth.hasLoginState()
-        if (res?.isAnonymousAuth) {
-            return 'AnonymousAuth'
-        }
-        if (res?.isCustomAuth) {
-            return 'CustomAuth'
-        }
-        if (res?.isUsernameAuth) {
-            return 'UsernameAuth'
-        }
-        if (res?.isWeixinAuth) {
-            return 'isWeixinAuth'
-        }
-        if (res) {
-            return 'hasLogin'
-        }
+    isLogin(): Promise<string> {
+        return new Promise((resolve, reject) => {
+            auth.getLoginState().then((res) => {
+                resolve(res?.loginType)
+            }).catch(() => {
+                reject('未登录')
+            })
+        })
 
     }
 }

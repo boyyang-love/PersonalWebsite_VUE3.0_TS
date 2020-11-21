@@ -47,18 +47,24 @@ export default defineComponent({
           break;
         case 3:
           {
-            login.isLogin().then((res) => {
-              //未登录或者匿名登录都需要注册才可以进入
-              if (res == "AnonymousAuth" || res == "未登录") {
+            login
+              .isLogin()
+              .then((res) => {
+                if (res != "AnonymousAuth") {
+                  router.push({
+                    name: "Center",
+                  });
+                } else {
+                  router.push({
+                    name: "Login",
+                  });
+                }
+              })
+              .catch(() => {
                 router.push({
                   name: "Login",
                 });
-              } else {
-                router.push({
-                  name: "Center",
-                });
-              }
-            });
+              });
           }
           break;
         case 4:

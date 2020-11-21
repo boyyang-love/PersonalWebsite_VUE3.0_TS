@@ -1,16 +1,32 @@
 <template>
   <div class="center">
-    <h1>this is center page</h1>
+    <left-navbar></left-navbar>
   </div>
 </template>
 
 <script lang='ts'>
 import { defineComponent } from "vue";
-
+import LeftNavbar from "@/components/LeftNavbar/index.vue";
 export default defineComponent({
   name: "center",
+  components: {
+    LeftNavbar,
+  },
 });
 </script>
 
-<style>
+<style scoped lang='scss'>
+@mixin center($direction) {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: $direction;
+}
+.center {
+  width: 100vw;
+  height: 100vh;
+  background-color: #f9906f;
+  display: flex;
+  align-items: center;
+}
 </style>
