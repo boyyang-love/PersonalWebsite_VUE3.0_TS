@@ -5,6 +5,7 @@
       :key="tab.tabIndex"
       :tabindex="tab.tabIndex"
       :index="index"
+      :icon="tab.icon"
       @click="tabChange(tab.tabIndex)"
       >{{ tab.tabName }}</item
     >
@@ -50,15 +51,26 @@ export default defineComponent({
             login
               .isLogin()
               .then((res) => {
-                if (res != "AnonymousAuth") {
-                  router.push({
-                    name: "Center",
-                  });
-                } else {
+                console.log(res);
+                if (res == "ANONYMOUS" || res == undefined) {
                   router.push({
                     name: "Login",
                   });
+                } else {
+                  router.push({
+                    name: "Center",
+                  });
                 }
+
+                // if (res != "AnonymousAuth") {
+                //   router.push({
+                //     name: "Center",
+                //   });
+                // } else {
+                //   router.push({
+                //     name: "Login",
+                //   });
+                // }
               })
               .catch(() => {
                 router.push({

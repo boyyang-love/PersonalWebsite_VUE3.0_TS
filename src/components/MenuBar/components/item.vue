@@ -1,5 +1,6 @@
 <template>
-  <div :class="['item', { active: tabindex == index }]">
+  <div :class="['item', 'iconfont', { active: tabindex == index }]">
+    <i :class="['iconfont', icon]"></i>
     <slot></slot>
   </div>
 </template>
@@ -15,6 +16,9 @@ export default defineComponent({
       type: Number,
       default: 1,
     },
+    icon: {
+      type: String,
+    },
   },
 });
 </script>
@@ -26,10 +30,21 @@ export default defineComponent({
   justify-content: center;
   align-items: center;
   flex: 1;
+  color: #3eede7;
+
+  i {
+    font-size: 28px;
+    margin: 5px;
+    color: #3eede7;
+  }
   &:hover {
     background-color: rgba(255, 192, 203, 0.5);
     color: #f7f7f7;
     font-weight: bold;
+
+    i {
+      color: #f7f7f7;
+    }
   }
 }
 

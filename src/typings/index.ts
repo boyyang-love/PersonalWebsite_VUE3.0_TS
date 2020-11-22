@@ -1,6 +1,7 @@
 interface Itabs {
     tabIndex: number;
     tabName: string;
+    icon: string;
 }
 
 interface IhomeState {
@@ -21,6 +22,7 @@ interface IloginState {
 interface Inavbar {
     name: string;
     id: number;
+    icon: string;
 }
 
 export {

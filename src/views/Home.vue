@@ -35,22 +35,27 @@ export default defineComponent({
       {
         tabIndex: 1,
         tabName: "Home",
+        icon: "icon-shouye2",
       },
       {
         tabIndex: 2,
         tabName: "Music",
+        icon: "icon-yinle6",
       },
       {
         tabIndex: 3,
         tabName: "Center",
+        icon: "icon-A",
       },
       {
         tabIndex: 4,
         tabName: "Contact",
+        icon: "icon-lianxi",
       },
       {
         tabIndex: 5,
         tabName: "About",
+        icon: "icon-iconset0142",
       },
     ];
 
