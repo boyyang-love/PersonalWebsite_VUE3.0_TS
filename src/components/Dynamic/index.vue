@@ -1,9 +1,31 @@
 <template>
-  <div class="dynamic animated slideInLeft">this is dynamic</div>
+  <div class="dynamic animated slideInLeft">
+    <item></item>
+  </div>
 </template>
 
-<script>
-export default {};
+<script lang='ts'>
+import { defineComponent, PropType, reactive, ref, toRefs } from "vue";
+import Item from "./components/item.vue";
+import { Getbackground } from "@/hooks/index.ts";
+import { IDynamicState } from '@/typings';
+export default defineComponent({
+  name: "Dynamic",
+  components: {
+    Item,
+  },
+  setup() {
+    const getbackground = new Getbackground();
+    
+    getbackground.getbg().then((res) => {
+       console.log(res)
+    });
+
+    return {
+      
+    };
+  },
+});
 </script>
 
 <style scoped lang='scss'>

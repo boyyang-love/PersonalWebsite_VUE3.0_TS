@@ -25,9 +25,24 @@ interface Inavbar {
     icon: string;
 }
 
+interface IDynamicState {
+    lists: Ibackground
+}
+
+
+interface Ibackground {
+    downloadUrl: string;
+    fileID: string;
+    fileid: string;
+    tempFileURL: string;
+    _id: string;
+    _openid: string;
+}
 export {
     Itabs,
     IhomeState,
     IloginState,
-    Inavbar
+    Inavbar,
+    Ibackground,
+    IDynamicState
 }

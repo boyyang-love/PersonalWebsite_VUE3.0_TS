@@ -114,7 +114,26 @@ class Login {
     }
 }
 
+// 获取背景图片
+class Getbackground {
+
+    getbg() {
+        return new Promise((resolve, reject) => {
+            db.collection('usersBg').get().then((res) => {
+                if (res) {
+                    resolve(res)
+                }
+            }).catch((err) => {
+                reject(err)
+            })
+
+        })
+
+    }
+}
+
 export {
     FileUp,
-    Login
+    Login,
+    Getbackground
 }
