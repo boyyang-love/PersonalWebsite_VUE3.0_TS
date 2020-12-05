@@ -1,19 +1,45 @@
-import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse, AxiosStatic } from 'axios'
+import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios'
 import qs from 'qs'
 
+/**
+ * @auther boyyang-love 
+ * @NODE_ENV 根据当前环境确定请求地址
+ * @development 开发环境、
+ * @production 生产环境
+ * @debug  测试环境
+ */
+
+// if (process.env.NODE_ENV == 'development') {
+//     baseUrl = ''
+// } else if (process.env.NODE_ENV == 'production') {
+//     baseUrl = ''
+// } else if (process.env.NODE_ENV == 'debug') {
+//     baseUrl = ''
+// }
+
+
+// axios.defaults.baseURL = 'http://1905.com'
+
 const server: AxiosInstance = axios.create({
-    baseURL: '',
+    baseURL: process.env.NODE_ENV == 'development' ? 'http://1905.com': 'http://2020.com' ,
     timeout: 3000,
 })
 /**
- * @axios 请求拦截
+ * axios请求拦截
  * @return 
  * @config
  */
 server.interceptors.request.use(
     (config: AxiosRequestConfig): AxiosRequestConfig | Promise<AxiosRequestConfig> => {
-        config.data = JSON.stringify(config.data);
-        config.headers = { 'Content-Type': 'application/x-www-form-urlencoded' }
+        if (config.method == 'get') {
+            config.headers.get['Content-Type'] =  'application/x-www-form-urlencoded;charset=utf-8' 
+        }
+        if (config.method == 'post') {
+            config.headers.post['Content-Type'] =  'application/json;charset=utf-8' 
+        }
+        // const token = '1111111';        
+        // token && (config.headers.Authorization = token);
+        console.log(config)
         return config;
     },
     (error) => {
@@ -21,7 +47,7 @@ server.interceptors.request.use(
     }
 )
 /**
- * @axios
+ * 响应拦截
  * @return 
  * @response
  */
@@ -78,6 +104,41 @@ server.interceptors.response.use(
         return Promise.resolve(error.response)
     }
 )
+
+/**
+ * 导出get请求方法
+ * @url 请求地址
+ * @params get请求参数
+ */
+export function get(url: string, params?: any): Promise<AxiosResponse> | Promise<AxiosResponse<any>> {
+    return new Promise((resolve, reject) => {
+        server.get(url, {
+            params: params
+        }).then((res) => {
+            resolve(res.data)
+        }).catch((err) => {
+            reject(err)
+        })
+    })
+}
+
+
+/**
+ * 导出post请求方法
+ * @url 请求地址
+ * @params post请求参数
+ */
+
+export function post(url: string, params: any): Promise<AxiosResponse> | Promise<AxiosResponse<any>> {
+    return new Promise((resolve, reject) => {
+        server.post(url, qs.stringify(params)).then((res) => {
+            resolve(res.data)
+        }).catch((err) => {
+            reject(err)
+        })
+    })
+}
+
 
 
 
