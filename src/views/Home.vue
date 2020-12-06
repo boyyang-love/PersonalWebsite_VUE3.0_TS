@@ -21,11 +21,10 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, reactive, ref, toRefs } from "vue";
+import { defineComponent, reactive, ref, toRefs } from "vue";
 import MenuBar from "@/components/MenuBar/index.vue";
 import { IhomeState, Itabs } from "@/typings";
-import { FileUp, Login } from "@/hooks/index.ts";
-import { getHome, postHome } from "@/api/api.ts";
+import { FileUp } from "@/hooks/index.ts";
 export default defineComponent({
   name: "Home",
   components: {
@@ -65,27 +64,14 @@ export default defineComponent({
       id: "1",
       fileID: "1",
     });
-
+    // 实列化文件上传函数
     const file = new FileUp(state);
-    // const login = new Login();
 
-    const img: any = ref(null);
+    const img = ref<any>(null);
 
     const imgUp = (): void => {
       file.fileUpdate(img.value.files[0]);
     };
-
-    getHome({
-      id: 111
-    }).then((res: any) =>{
-      console.log(res)
-    })
-
-    postHome({
-      id:2
-    }).then((res: any) =>{
-      console.log(res)
-    })
 
     return {
       img,

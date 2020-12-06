@@ -10,7 +10,7 @@ import qs from 'qs'
  */
 
 const server: AxiosInstance = axios.create({
-    baseURL: process.env.NODE_ENV == 'development' ? 'http://1905.com': 'http://2020.com' ,
+    baseURL: process.env.NODE_ENV == 'development' ? 'https://autumnfish.cn': 'https://autumnfish.cn' ,
     timeout: 3000,
 })
 

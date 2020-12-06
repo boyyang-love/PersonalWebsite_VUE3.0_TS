@@ -13,9 +13,14 @@ class FileUp {
     __init__() { //初始化操作获取背景图片以及当前数据_id,_id为后面更换背景用
         const id = localStorage.getItem('BG')
         db.collection('usersBg').where({ _id: id }).get().then((res: any) => {
-            this.state.bg = res.data[0].tempFileURL
-            this.state.id = res.data[0]._id
-            this.state.fileID = res.data[0].fileID
+            if (res.data.length != 0) {
+                this.state.bg = res.data[0].tempFileURL
+                this.state.id = res.data[0]._id
+                this.state.fileID = res.data[0].fileID
+            } else {
+                return
+            }
+
         })
     }
 
@@ -116,8 +121,10 @@ class Login {
 
 // 获取背景图片
 class Getbackground {
-
-    getbg() { //获取上传后的背景图片
+    /**
+     * 获取用户上传的所有背景图片
+     */
+    getbg() {
         return new Promise((resolve, reject) => {
             db.collection('usersBg').get().then((res) => {
                 if (res) {
@@ -128,6 +135,20 @@ class Getbackground {
             })
         })
 
+    }
+    /**
+     * 图片下载
+     * @url [字符串]
+     * @return [promise<any>]
+     */
+    download(url: string): Promise<any> {
+        return new Promise((resolve, resject) => {
+            app.downloadFile({fileID: url}).then(res => {
+                resolve(res)
+            }).catch(err => {
+                resject(err)
+            })
+        })
     }
 }
 

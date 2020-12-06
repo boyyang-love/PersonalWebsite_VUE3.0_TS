@@ -38,11 +38,17 @@ interface Ibackground {
     _id: string;
     _openid: string;
 }
+
+// 音乐数据
+interface IMusicState {
+    musicList: []
+}
 export {
     Itabs,
     IhomeState,
     IloginState,
     Inavbar,
     Ibackground,
-    IDynamicState
+    IDynamicState,
+    IMusicState  
 }

@@ -4,13 +4,14 @@
       v-for="item in images"
       :key="item._id"
       :img="item.tempFileURL"
-      >{{
-    }}</img-box>
+      :downLoadUrl="item.fileID"
+      @download="download"
+      ></img-box>
   </div>
 </template>
 
 <script lang='ts'>
-import { defineComponent, PropType, reactive, ref, toRefs } from "vue";
+import { defineComponent, reactive, toRefs } from "vue";
 import ImgBox from "./components/ImgBox.vue";
 import { Getbackground } from "@/hooks/index.ts";
 import { Ibackground, IDynamicState } from "@/typings";
@@ -32,8 +33,18 @@ export default defineComponent({
       state.images = res.data;
     });
 
+    const download = (url: string): void => {
+      console.log(url)
+      getbackground.download(url).then((res) => {
+        console.log(res);
+      }).catch(err =>{
+        console.log(err)
+      });
+    };
+
     return {
       ...toRefs(state),
+      download,
     };
   },
 });

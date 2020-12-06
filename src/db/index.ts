@@ -8,7 +8,16 @@ const auth = app.auth({
     persistence: "local",
 });
 
-auth.anonymousAuthProvider().signIn();
+const loginstate = auth.hasLoginState()
+
+if (!loginstate) {
+    auth.anonymousAuthProvider().signIn().then((res) =>{
+        console.log(res)
+    });
+} else {
+    console.log('已登录')
+}
+
 
 const db = app.database();
 
