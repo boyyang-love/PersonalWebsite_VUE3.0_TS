@@ -5,4 +5,7 @@ import  {get, post}  from "./https"
 
 
 // 获取精品歌单
-export const getMusicList = (params?: any) => get('/top/playlist/highquality')
+export const getMusicList = (params?: any) => get('/top/playlist/', params)
+
+// 获取精品歌单详情
+export const getMusicListDetail = (params?: any) => get('/playlist/detail/', params)
