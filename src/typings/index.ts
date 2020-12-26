@@ -43,6 +43,11 @@ interface Ibackground {
 interface IMusicState {
     musicList: []
 }
+
+//  音乐详情列表
+interface ImusicDetail {
+    list: object
+}
 export {
     Itabs,
     IhomeState,
@@ -50,5 +55,6 @@ export {
     Inavbar,
     Ibackground,
     IDynamicState,
-    IMusicState  
+    IMusicState,
+    ImusicDetail
 }

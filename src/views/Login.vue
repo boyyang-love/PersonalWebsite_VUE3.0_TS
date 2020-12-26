@@ -1,68 +1,86 @@
 <template>
   <div class="login">
-    <login-box
-      class="animated rubberBand"
-      @singup="singup"
-      @singin="singin"
-    ></login-box>
+    <sign-box
+      @signin="signIn"
+      @register="register"
+      @signout="signout"
+    ></sign-box>
   </div>
-  <loading :isLoading="isLoading" />
 </template>
 
 <script lang='ts'>
-import { defineComponent, ref } from "vue";
-import LoginBox from "@/components/LoginBox/index.vue";
+import { defineComponent, ref, h } from "vue";
 import { Login } from "@/hooks/index.ts";
 import { useRouter } from "vue-router";
+import { ElMessage } from "element-plus";
+import SignBox from "@/components/SignBox/index.vue";
 export default defineComponent({
   name: "Login",
   components: {
-    LoginBox,
+    SignBox,
   },
   setup() {
-    const isLoading = ref<boolean>(false);
-    // 实例化登录
-    const LOGIN = new Login();
-    // 路由
+    const { singin, singup } = new Login();
     const router = useRouter();
-    // 注册
-    const singup = (account: string, password: string): void => {
-      isLoading.value = true;
-      LOGIN.singup(account, password).then((res) => {
-        if (res == "注册成功") {
-          isLoading.value = false;
-          alert("账号注册成功，请前往邮箱确认");
-        } else {
-          isLoading.value = false;
-          alert(res);
-        }
-      });
-    };
     // 登录
-    const singin = (account: string, password: string): void => {
-      isLoading.value = true;
-      LOGIN.singin(account, password)
+    const signIn = (account: string, password: string): void => {
+      singin(account, password)
         .then((res) => {
           if (res == "登录成功") {
-            isLoading.value = false;
-            router.push({
-              name: "Center",
+            ElMessage({
+              message: h("p", null, [
+                h("span", null, res),
+                h("i", { style: "color: teal" }, "提示"),
+              ]),
             });
+            router.push({ name: "Center" });
           } else {
-            isLoading.value = false;
-            alert(res);
+            ElMessage({
+              message: h("p", null, [
+                h("span", null, res),
+                h("i", { style: "color: teal" }, "提示"),
+              ]),
+            });
           }
         })
         .catch((err) => {
-          isLoading.value = false;
-          alert(err);
+          ElMessage({
+            message: h("p", null, [
+              h("span", null, err),
+              h("i", { style: "color: teal" }, "提示"),
+            ]),
+          });
         });
     };
-
+    // 注册
+    const register = (account: string, password: string): void => {
+      singup(account, password).then((res) => {
+        if (res == "注册成功") {
+          ElMessage({
+            message: h("p", null, [
+              h("span", null, res),
+              h("i", { style: "color: teal" }, "提示"),
+            ]),
+          });
+          router.push({ name: "Center" });
+        } else {
+          ElMessage({
+            message: h("p", null, [
+              h("span", null, res),
+              h("i", { style: "color: teal" }, "提示"),
+            ]),
+          });
+        }
+      });
+    };
+    // 退出
+    const signout = (): void => {
+      router.push({ name: "Home" });
+    };
     return {
-      singup,
-      singin,
-      isLoading,
+      signIn,
+      register,
+      signout
     };
   },
 });
@@ -72,7 +90,7 @@ export default defineComponent({
 .login {
   width: 100%;
   height: 100vh;
-  background: url("../assets/images/长发美女居家写真4k壁纸3840x2160_彼岸图网.jpg")
+  background: url("../assets/images/鬼灭之刃蝴蝶忍4k高清电脑壁纸3840x2160_彼岸图网.jpg")
     no-repeat;
   background-size: cover;
   display: flex;

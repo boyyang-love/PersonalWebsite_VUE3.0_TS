@@ -1,7 +1,6 @@
 import { app, db, auth } from '@/db/index.ts'
 import { IhomeState } from '@/typings';
 
-
 // 文件上传
 class FileUp {
     state: IhomeState;
@@ -109,7 +108,7 @@ class Login {
     // 登录状态判断
     isLogin(): Promise<string> {
         return new Promise((resolve, reject) => {
-            auth.getLoginState().then((res) => {
+            auth.getLoginState().then((res: any) => {
                 resolve(res?.loginType)
             }).catch(() => {
                 reject('未登录')

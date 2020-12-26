@@ -1,24 +1,43 @@
 <template>
   <div class="musicdetail">
-    <h1>this is musicdetail</h1>
+    <div class="top">
+      {{list}}
+    </div>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent, reactive, toRefs } from "vue";
 import { useRoute } from "vue-router";
 import { getMusicListDetail } from "@/api/api";
+import { ImusicDetail } from "@/typings";
 export default defineComponent({
   name: "MusiclistDetail",
   setup() {
+    const stateRes: ImusicDetail = {
+       list: {}
+    }
+    // 获取路由元信息
     const route = useRoute();
-    console.log(route.params.id)
-    getMusicListDetail({ id: 24381616 }).then((res: any) => {
-      console.log(res);
+    // 调用接口
+    getMusicListDetail({ id: route.params.id }).then((res: any) => {
+      return stateRes.list = res.playlist
+
     });
+
+    console.log(stateRes.list)
+    
+    return {
+      ...stateRes
+    };
   },
 });
 </script>
 
-<style>
+<style scoped lang="scss">
+
+img {
+  width: 100%;
+  height: 200px;
+}
 </style>
