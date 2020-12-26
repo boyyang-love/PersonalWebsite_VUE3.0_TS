@@ -41,7 +41,8 @@ class FileUp {
                     downloadUrl: temp.fileList[0].download_url,
                     fileID: temp.fileList[0].fileID,
                     fileid: temp.fileList[0].fileid,
-                    tempFileURL: temp.fileList[0].tempFileURL
+                    tempFileURL: temp.fileList[0].tempFileURL,
+                    time: new Date()
                 }).then((res: any) => {
                     localStorage.setItem('BG', res.id)
                 })

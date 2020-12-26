@@ -1,14 +1,13 @@
 <template>
   <div class="alertbox animated wobble">
+    <div class="avater"></div>
     <div class="header">
-      <span>退出登录</span>
+      <span>sign out</span>
       <i class="iconfont icon-custom311" @click="$emit('exitlogin')"></i>
     </div>
-    <div class="content">
-      <div class="box1">上传动态</div>
-      <div class="box2">上传图片</div>
-    </div>
+    <div class="content"></div>
   </div>
+
 </template>
 
 <script lang="ts">
@@ -22,11 +21,25 @@ export default defineComponent({
 <style scoped lang="scss">
 .alertbox {
   width: 300px;
-  height: 50vh;
+  height: 70vh;
   background-color: #fff;
   box-shadow: 2px 2px 1px 0 rgba(0, 0, 0, 0.5);
   border-radius: 8px;
-  overflow: hidden;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+
+  .avater {
+    width: 100px;
+    height: 100px;
+    background-color: #fff;
+    position: absolute;
+    top: -44px;
+    border-radius: 100%;
+    box-shadow: 1px 1px 0 0 rgba(0, 0, 0, 0.5);
+  }
 
   .header {
     width: 100%;

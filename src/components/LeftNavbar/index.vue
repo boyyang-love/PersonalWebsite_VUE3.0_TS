@@ -16,6 +16,32 @@
       <img src="../../assets/images/齿轮.png" alt="齿轮" @click="exitLogin" />
     </div>
   </div>
+
+  <el-drawer
+    title="boyyang"
+    v-model="drawer"
+    direction="ltr"
+    :before-close="handleClose"
+    destroy-on-close
+  >
+    <div class="container">
+      <div class="userinfo">
+        <div class="header"></div>
+        <div class="info">
+          <div class="mes">kahfkkkkkkkkkkkkkkk</div>
+          <div class="mes">kahfkkkkkkkkkkkkkkk</div>
+          <div class="mes">kahfkkkkkkkkkkkkkkk</div>
+        </div>
+        <div class="bg-img">
+          <img
+            src="../../assets/images/长发美女居家写真4k壁纸3840x2160_彼岸图网.jpg"
+            alt=""
+          />
+        </div>
+      </div>
+      <div class="content"></div>
+    </div>
+  </el-drawer>
 </template>
 
 <script lang='ts'>
@@ -31,26 +57,29 @@ export default defineComponent({
     lists: {
       type: Array as PropType<Inavbar[]>,
       default: [
-        { name: "动态", id: 1, icon: "icon-dongtai" },
-        { name: "上传", id: 2, icon: "icon-shangchuan" },
-        { name: "圈子", id: 3, icon: "icon-pengyouquan2" },
+        { name: "", id: 1, icon: "icon-dongtai" },
+        { name: "", id: 2, icon: "icon-shangchuan" },
+        { name: "", id: 3, icon: "icon-pengyouquan2" },
       ],
     },
   },
   setup(props, { emit }) {
     const index = ref<number>(1);
+    const drawer = ref<boolean>(false);
     const change = (i: number): void => {
       index.value = i;
       emit("navchange", i);
     };
 
     const exitLogin = (): void => {
-      emit("alertshow");
+      // emit("alertshow");
+      drawer.value = !drawer.value;
     };
     return {
       change,
       index,
       exitLogin,
+      drawer,
     };
   },
 });
@@ -94,6 +123,51 @@ export default defineComponent({
   }
   100% {
     transform: rotateZ(360deg);
+  }
+}
+
+.container {
+  width: 100%;
+  height: 100%;
+  .userinfo {
+    width: 100%;
+    height: 200px;
+    position: relative;
+    display: grid;
+    grid-template-columns: 110px auto;
+    align-items: center;
+    .bg-img {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+
+      img {
+        width: 100%;
+        height: 100%;
+        opacity: 0.6;
+        z-index: 0;
+      }
+    }
+
+    .header {
+      width: 100px;
+      height: 100px;
+      background-color: #fff;
+      border: 2px solid pink;
+      border-radius: 100%;
+      z-index: 9;
+      margin-left: 5px;
+    }
+
+    .info {
+       height: 100%;
+       display: grid;
+       grid-template-columns: 1fr;
+       grid-template-rows: repeat(3, 1fr);
+       align-items: center;
+    }
   }
 }
 </style>
