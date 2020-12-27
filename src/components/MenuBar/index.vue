@@ -102,17 +102,15 @@ export default defineComponent({
 
 <style scoped lang='scss'>
 .menuBar {
-  width: 80%;
-  height: 10vh;
-  background-color: rgba(23, 124, 176, 0.5);
-  border-radius: 15px;
-  box-shadow: 0 2px 3px 0 rgba(2, 2, 2, 0.5);
-  margin-bottom: 25px;
+  width: 40%;
   position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
   cursor: pointer;
   overflow: hidden;
+  position: absolute;
+  top: 15px;
+  left: 0;
 }
 </style>

@@ -6,7 +6,7 @@ class FileUp {
     state: IhomeState;
     constructor(state: IhomeState) {
         this.state = state
-        this.__init__()
+        // this.__init__()
     }
 
     __init__() { //初始化操作获取背景图片以及当前数据_id,_id为后面更换背景用
