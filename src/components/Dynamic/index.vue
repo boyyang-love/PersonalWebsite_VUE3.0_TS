@@ -6,7 +6,7 @@
         v-for="(item, index) in images"
         :key="index"
         color="red"
-        :timestamp="item.time"
+        timestamp="背景图片集"
       >
         <img :src="item.tempFileURL" alt="" />
       </el-timeline-item>
@@ -32,24 +32,9 @@ export default defineComponent({
 
     getbackground.getbg().then((res: any) => {
       state.images = res.data;
-      console.log(res);
     });
-
-    const download = (url: string): void => {
-      console.log(url);
-      getbackground
-        .download(url)
-        .then((res) => {
-          console.log(res);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    };
-
     return {
       ...toRefs(state),
-      download,
     };
   },
 });

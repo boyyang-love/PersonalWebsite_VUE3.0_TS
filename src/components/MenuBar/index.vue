@@ -108,9 +108,15 @@ export default defineComponent({
   justify-content: center;
   align-items: center;
   cursor: pointer;
-  overflow: hidden;
   position: absolute;
   top: 15px;
   left: 0;
+
+  @media screen and (max-width: 400px){
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 }
 </style>

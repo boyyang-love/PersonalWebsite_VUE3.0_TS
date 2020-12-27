@@ -13,35 +13,13 @@
     <i class="iconfont"></i>
 
     <div class="setting">
-      <img src="../../assets/images/齿轮.png" alt="齿轮" @click="exitLogin" />
+      <img
+        src="../../assets/images/齿轮.png"
+        alt="齿轮"
+        @click="$emit('alertshow')"
+      />
     </div>
   </div>
-
-  <el-drawer
-    title="boyyang"
-    v-model="drawer"
-    direction="ltr"
-    :before-close="handleClose"
-    destroy-on-close
-  >
-    <div class="container">
-      <div class="userinfo">
-        <div class="header"></div>
-        <div class="info">
-          <div class="mes">kahfkkkkkkkkkkkkkkk</div>
-          <div class="mes">kahfkkkkkkkkkkkkkkk</div>
-          <div class="mes">kahfkkkkkkkkkkkkkkk</div>
-        </div>
-        <div class="bg-img">
-          <img
-            src="../../assets/images/长发美女居家写真4k壁纸3840x2160_彼岸图网.jpg"
-            alt=""
-          />
-        </div>
-      </div>
-      <div class="content"></div>
-    </div>
-  </el-drawer>
 </template>
 
 <script lang='ts'>
@@ -100,6 +78,7 @@ export default defineComponent({
   margin-left: 30px;
   position: absolute;
   left: 0px;
+  z-index: 9;
 
   .setting {
     position: absolute;
@@ -111,6 +90,10 @@ export default defineComponent({
       animation-iteration-count: infinite;
       cursor: pointer;
     }
+  }
+
+  @media screen and (max-width: 400px) {
+    margin-left: 0;
   }
 }
 
@@ -162,11 +145,11 @@ export default defineComponent({
     }
 
     .info {
-       height: 100%;
-       display: grid;
-       grid-template-columns: 1fr;
-       grid-template-rows: repeat(3, 1fr);
-       align-items: center;
+      height: 100%;
+      display: grid;
+      grid-template-columns: 1fr;
+      grid-template-rows: repeat(3, 1fr);
+      align-items: center;
     }
   }
 }

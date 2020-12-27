@@ -45,6 +45,13 @@ export default defineComponent({
       color: #f7f7f7;
     }
   }
+
+  @media screen and (max-width: 400px){
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
 }
 
 .active {

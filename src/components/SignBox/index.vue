@@ -159,6 +159,11 @@ export default defineComponent({
   justify-content: center;
   align-items: center;
 
+  @media screen and (max-width: 400px){
+    width: 345px;
+    height: 360px;
+  }
+
   .status {
     width: 100%;
     height: 100%;
@@ -225,6 +230,10 @@ export default defineComponent({
       &:focus + .label {
         bottom: 20px;
         color: white;
+      }
+
+      @media screen and (max-width: 400px){
+        padding-left: 80px;
       }
     }
   }

@@ -88,7 +88,7 @@ export default defineComponent({
 
 <style scoped lang='scss'>
 .login {
-  width: 100%;
+  width: 100vw;
   height: 100vh;
   background: url("../assets/images/鬼灭之刃蝴蝶忍4k高清电脑壁纸3840x2160_彼岸图网.jpg")
     no-repeat;

@@ -87,12 +87,17 @@ export default defineComponent({
     display: flex;
     justify-content: center;
     align-items: center;
+    z-index: 9;
     i {
       font-size: 35px;
       cursor: pointer;
       &:hover {
         color: #be002f;
       }
+    }
+
+    @media screen and (max-width: 400px) {
+      right: 0;
     }
   }
 
