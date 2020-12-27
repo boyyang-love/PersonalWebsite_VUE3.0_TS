@@ -123,7 +123,7 @@ export default defineComponent({
     });
    
     // 实列化文件上传函数
-    const file = new FileUp(state);
+    const file = new FileUp(state, '');
     // 获取背景图片
     const getbg = new Getbackground();
     getbg.getbg().then((res: any) => {

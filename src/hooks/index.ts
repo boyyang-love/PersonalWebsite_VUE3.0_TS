@@ -4,28 +4,21 @@ import { IhomeState } from '@/typings';
 // 文件上传
 class FileUp {
     state: IhomeState;
-    constructor(state: IhomeState) {
+    userId?: string;
+    constructor(state: IhomeState, userId: string) {
         this.state = state
-        // this.__init__()
+        this.userId = userId
+        this.__init__()
     }
 
-    __init__() { //初始化操作获取背景图片以及当前数据_id,_id为后面更换背景用
-        const id = localStorage.getItem('BG')
-        db.collection('usersBg').where({ _id: id }).get().then((res: any) => {
-            if (res.data.length != 0) {
-                this.state.bg = res.data[0].tempFileURL
-                this.state.id = res.data[0]._id
-                this.state.fileID = res.data[0].fileID
-            } else {
-                return
-            }
-
-        })
+    async __init__() { //初始化操作获取背景图片以及当前数据_id,_id为后面更换背景用
+        const user = await auth.getCurrenUser()
+        this.userId = user.uid
     }
 
     fileUpdate(file: any) { //图片文件上传
         app.uploadFile({
-            cloudPath: `bg/${file.name}`,
+            cloudPath: `bg/${this.userId}/${file.name}`,
             filePath: file,
         }).then((res) => {
             app.getTempFileURL({
