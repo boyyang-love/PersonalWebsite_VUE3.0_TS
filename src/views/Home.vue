@@ -355,6 +355,10 @@ export default defineComponent({
   }
 }
 
+a{
+  text-decoration: none;
+}
+
 @keyframes FishMove {
   0% {
     transform: translateX(0);

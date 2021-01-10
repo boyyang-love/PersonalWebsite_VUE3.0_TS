@@ -55,5 +55,11 @@ export default defineComponent({
   img {
     width: 100%;
   }
+
+  @media screen and (max-width: 400px) {
+    img {
+      width: 100%;
+    }
+  }
 }
 </style>

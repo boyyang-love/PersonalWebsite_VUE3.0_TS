@@ -158,7 +158,8 @@ export default defineComponent({
   grid-template-rows: repeat(5, 1fr);
   justify-content: center;
   align-items: center;
-
+  // box-shadow
+  box-shadow: 1px 1px 2px 1px rgba(0, 0, 0, 1);
   @media screen and (max-width: 400px){
     width: 345px;
     height: 360px;

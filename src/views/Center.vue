@@ -1,110 +1,101 @@
 <template>
   <div class="center">
-    <left-navbar @navchange="navchange" @alertshow="alertshow"></left-navbar>
-    <dynamic v-show="navIndex == 1"></dynamic>
-    <upload-news v-show="navIndex == 2"></upload-news>
-    <circle-friends v-show="navIndex == 3"></circle-friends>
-    <div class="exit">
-      <i class="iconfont icon-custom311" @click="$router.push('/')"></i>
-    </div>
-    <div class="alert-box" v-show="isAlert">
-      <alert-box @exitlogin="exitlogin"></alert-box>
+    <div class="cars">
+      <div class="header">
+        <el-page-header @back="goBack" content="背景图片"></el-page-header>
+        <i class="el-icon-mobile-phone" @click="changeCard"></i>
+      </div>
+      <el-carousel
+        :interval="4000"
+        :type="type"
+        height="95vh"
+        indicator-position="none"
+        initial-index="0"
+      >
+        <el-carousel-item v-for="item in bgLists" :key="item._id">
+          <div class="img">
+            <img :src="item.tempFileURL" alt="" />
+          </div>
+        </el-carousel-item>
+      </el-carousel>
     </div>
   </div>
 </template>
 
-<script lang='ts'>
-import { defineComponent, ref } from "vue";
-import LeftNavbar from "@/components/LeftNavbar/index.vue";
-import Dynamic from "@/components/Dynamic/index.vue";
-import UploadNews from "@/components/UploadNews/index.vue";
-import CircleFriends from "@/components/CircleFriends/index.vue";
-import AlertBox from "@/components/AlertBox/index.vue";
-import { Login } from "@/hooks/index.ts";
+<script lang="ts">
+import { defineComponent, reactive, toRefs, watch } from "vue";
+import { Getbackground } from "@/hooks/index.ts";
+import { IbgLists } from "@/typings/index.ts";
 import { useRouter } from "vue-router";
-import { auth } from "@/db/index.ts";
 export default defineComponent({
-  name: "center",
-  components: {
-    LeftNavbar,
-    Dynamic,
-    UploadNews,
-    CircleFriends,
-    AlertBox,
-  },
+  name: "Center",
   setup() {
-    const navIndex = ref<number>(1);
-    const isAlert = ref<boolean>(false);
+    // center 数据
+    const centerState: IbgLists = reactive({
+      bgLists: [],
+      type: "card", //走马灯样式
+    });
+    // 实列化
+    const bg = new Getbackground();
     const router = useRouter();
-    const login = new Login();
-    const navchange = (i: number): void => {
-      navIndex.value = i;
-    };
-    // 隐藏alertbox
-    const alertshow = (): void => {
-      isAlert.value = !isAlert.value;
-    };
-    // 退出登录
-    const exitlogin = (): void => {
-      login.signout().then((res) => {
-        auth
-          .anonymousAuthProvider()
-          .signIn()
-          .then(() => {
-            router.push("/");
-          });
+    // 获取背景图片
+    bg.getbg()
+      .then((res: any) => {
+        centerState.bgLists = res.data;
+      })
+      .catch((err: any) => {
+        console.log(err);
       });
+    // 退出
+    const goBack = (): void => {
+      router.back();
+    };
+    // 改变轮播图样式
+    const changeCard = (): void => {
+      centerState.type = ""
     };
 
+    // screenWidth: document.body.clientWidth,     // 屏幕宽
+    //     screeHeight: document.body.clientHeight
     return {
-      navchange,
-      navIndex,
-      alertshow,
-      isAlert,
-      exitlogin,
+      ...toRefs(centerState),
+      goBack,
+      changeCard,
     };
   },
 });
 </script>
 
-<style scoped lang='scss'>
-@mixin center($direction) {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: $direction;
-}
+<style scoped lang="scss">
 .center {
   width: 100vw;
   height: 100vh;
-  background-color: #f9906f;
-  display: flex;
-  @include center(cloum);
 
-  .exit {
-    position: absolute;
-    right: 20px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 9;
-    i {
-      font-size: 35px;
+  .cars {
+    width: 100%;
+    height: 100%;
+    .header {
+      display: flex;
+      align-items: center;
       cursor: pointer;
-      &:hover {
-        color: #be002f;
+      i:hover {
+        color: rgb(53, 173, 173);
       }
-    }
-
-    @media screen and (max-width: 400px) {
-      right: 0;
     }
   }
 
-  .alert-box {
-    position: absolute;
-    left: 80px;
-    @include center(cloum);
+  .img {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(26, 23, 23, 1);
+    border-radius: 5px;
+  }
+
+  img {
+    height: 100%;
   }
 }
 </style>

@@ -48,6 +48,11 @@ interface IMusicState {
 interface ImusicDetail {
     list: object
 }
+// 背景图片列表
+interface IbgLists {
+    bgLists: [];
+    type: string;
+}
 export {
     Itabs,
     IhomeState,
@@ -56,5 +61,6 @@ export {
     Ibackground,
     IDynamicState,
     IMusicState,
-    ImusicDetail
+    ImusicDetail,
+    IbgLists
 }
