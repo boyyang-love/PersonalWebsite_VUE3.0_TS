@@ -4,20 +4,22 @@
       <div class="header">
         <el-page-header @back="goBack" content="背景图片"></el-page-header>
       </div>
-      <el-carousel
-        :interval="4000"
+      <img-box :images="bgLists"></img-box>
+      <!-- <el-carousel
+        :interval="2000"
         :type="type"
         height="95vh"
         indicator-position="none"
         :initial-index="1"
         :autoplay="true"
+        :loop="true"
       >
         <el-carousel-item v-for="item in bgLists" :key="item._id">
           <div class="img">
             <img :src="item.tempFileURL" alt="" class="el-img"/>
           </div>
         </el-carousel-item>
-      </el-carousel>
+      </el-carousel> -->
     </div>
   </div>
 </template>
@@ -31,17 +33,21 @@ import {
   toRefs,
   watch,
 } from "vue";
+import ImgBox from "@/components/ImgBox/index.vue";
 import { Getbackground } from "@/hooks/index.ts";
 import { IbgLists } from "@/typings/index.ts";
 import { useRouter } from "vue-router";
 import { ElLoading } from "element-plus";
 export default defineComponent({
   name: "Center",
+  components: {
+    ImgBox,
+  },
   setup() {
     // center 数据
     const centerState: IbgLists = reactive({
       bgLists: [],
-      type: "card", //走马灯样式
+      type: "", //走马灯样式
     });
     // 实列化
     const bg = new Getbackground();
@@ -50,6 +56,7 @@ export default defineComponent({
     bg.getbg()
       .then((res: any) => {
         centerState.bgLists = res.data;
+        console.log(res)
       })
       .catch((err: any) => {
         console.log(err);
@@ -72,9 +79,10 @@ export default defineComponent({
   width: 100vw;
   height: 100vh;
 
-  .cars {
+  .cars { 
     width: 100%;
     height: 100%;
+    overflow: hidden;
     .header {
       display: flex;
       align-items: center;
