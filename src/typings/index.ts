@@ -53,6 +53,11 @@ interface IbgLists {
     bgLists: [];
     type: string;
 }
+
+interface IfindWhere {
+    key: string
+    
+}
 export {
     Itabs,
     IhomeState,
