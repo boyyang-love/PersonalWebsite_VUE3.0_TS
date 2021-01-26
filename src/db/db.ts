@@ -1,7 +1,7 @@
 /**
  * @auth boyyang
  * @time 2021/1/25
- * @cloudbase 云开发
+ * @param cloudbase 云开发
  */
 
 import cloudbase from "@cloudbase/js-sdk";
@@ -24,8 +24,8 @@ const _ = db.command
 
 /**
  * @name 集合名称
- * @_id 查询id
- * @options 配置
+ * @param _id 查询id
+ * @param options 配置
  */
 
 // 数据库相关操作
@@ -120,9 +120,9 @@ class CloudBase {
 }
 
 /**
- * @name 集合名字
- * @path 云端路径
- * @file 上传文件
+ * @param name 集合名字
+ * @param path 云端路径
+ * @param file 上传文件
  */
 
 // 图片的相关操作
@@ -198,8 +198,8 @@ class ImageUpload {
 }
 
 /**
- * @account 账号
- * @password 密码
+ * @param account 账号
+ * @param password 密码
  */
 // 用户登录注册相关操作
 class Auth {
@@ -274,6 +274,38 @@ class Auth {
             })
         })
 
+    }
+
+    // 获取当前用户信息
+    userInfo() {
+        return new Promise((resolve, reject) => {
+            const user = auth.currentUser
+            if (user) {//当前用户已经登录
+                resolve(user)
+            } else { //
+                reject(false)
+            }
+        })
+    }
+
+    // 更新当前用户信息
+    updateUserinfo(nickName: string, gender: string, avatarUrl: string) {
+        return new Promise((resolve, reject) => {
+            const user = auth.currentUser
+            if (user) {
+                user.update({
+                    nickName: nickName,
+                    gender: gender,
+                    avatarUrl: avatarUrl
+                }).then((res: any) => {
+                    resolve(res)
+                }).catch((err: any) => {
+                    reject(err)
+                })
+            } else {
+                reject('用户未登录')
+            }
+        })
     }
 }
 
