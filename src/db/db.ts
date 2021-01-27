@@ -208,20 +208,11 @@ class Auth {
     // 登录
     singin(email: string, password: string): Promise<string> {
         return new Promise((resolve, reject) => {
-            db.collection('users')
-                .where({ email: email })
-                .get()
-                .then((res) => {
-                    if (res.data.length == 0) {
-                        resolve('不存在该用户,请注册')
-                    } else {
-                        auth.signInWithEmailAndPassword(email, password)
-                            .then(() => {
-                                resolve('登录成功')
-                            }).catch(() => {
-                                reject('账号或密码错误')
-                            })
-                    }
+            auth.signInWithEmailAndPassword(email, password)
+                .then(() => {
+                    resolve('登录成功')
+                }).catch(() => {
+                    reject('账号或密码错误')
                 })
         })
     }
@@ -229,32 +220,17 @@ class Auth {
     // 注册
     singup(email: string, password: string): Promise<string> {
         return new Promise((resolve, reject) => {
-            db.collection('users')
-                .where({ email: email })
-                .get()
-                .then((res: any) => {
-                    if (res.data.length == 0) {
-                        auth.signUpWithEmailAndPassword(email, password)
-                            .then(() => {
-                                db.collection('users').add({
-                                    email: email,
-                                    password: password
-                                }).then(() => {
-                                    resolve('请前往邮箱确认')
-                                })
-                            }).catch(() => {
-                                reject('注册失败')
-                            })
-                    } else {
-                        reject('该账号已经注册过')
-                    }
+            auth.signUpWithEmailAndPassword(email, password)
+                .then(() => {
+                    resolve('邮件发送成功请前往邮箱点击确认')
+                }).catch(() => {
+                    reject('注册失败,请确定账号未被注册过')
                 })
-
         })
     }
 
     // 注销
-    signout() {
+    signout(): Promise<void> {
         return new Promise((resolve, reject) => {
             auth.signOut().then(res => {
                 resolve(res)
@@ -265,7 +241,7 @@ class Auth {
     }
 
     // 登录状态判断
-    isLogin(): Promise<string> {
+    isLogin():Promise< any | null> {
         return new Promise((resolve, reject) => {
             auth.getLoginState().then((res: any) => {
                 resolve(res?.loginType)
