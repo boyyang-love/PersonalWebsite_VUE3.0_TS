@@ -3,10 +3,10 @@ import qs from 'qs'
 
 /**
  * @auther boyyang-love 
- * @NODE_ENV 根据当前环境确定请求地址
- * @development 开发环境、
- * @production 生产环境
- * @debug  测试环境
+ * @param NODE_ENV 根据当前环境确定请求地址
+ * @param development 开发环境、
+ * @param production 生产环境
+ * @param debug  测试环境
  */
 
 const server: AxiosInstance = axios.create({
@@ -16,8 +16,8 @@ const server: AxiosInstance = axios.create({
 
 /**
  * axios请求拦截
- * @return 
- * @config
+ * @param return 
+ * @param config
  */
 server.interceptors.request.use(
     (config: AxiosRequestConfig): AxiosRequestConfig | Promise<AxiosRequestConfig> => {
@@ -38,8 +38,8 @@ server.interceptors.request.use(
 )
 /**
  * 响应拦截
- * @return 
- * @response
+ * @param return 
+ * @param response
  */
 
 server.interceptors.response.use(
@@ -116,7 +116,7 @@ export function get(url: string, params?: any): Promise<AxiosResponse> | Promise
 /**
  * 导出post请求方法
  * @url 请求地址
- * @params post请求参数
+ * @param post 请求参数
  */
 
 export function post(url: string, params: any): Promise<AxiosResponse> | Promise<AxiosResponse<any>> {
@@ -128,8 +128,3 @@ export function post(url: string, params: any): Promise<AxiosResponse> | Promise
         })
     })
 }
-
-
-
-
-
