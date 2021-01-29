@@ -10,20 +10,12 @@
 
 <script lang='ts'>
 import { defineComponent } from "vue";
-import { useRouter } from "vue-router";
 import SignBox from "@/components/SignBox/index.vue";
 export default defineComponent({
   name: "Login",
   components: {
     SignBox,
-  },
-  setup() {
-    const router = useRouter();
-   
-    return {
-     
-    };
-  },
+  }
 });
 </script>
 

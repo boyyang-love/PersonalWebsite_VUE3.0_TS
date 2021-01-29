@@ -8,7 +8,7 @@ import cloudbase from "@cloudbase/js-sdk";
 
 // cloudbase实列
 const app = cloudbase.init({
-    env: ''
+    env: 'boyyang-8gwh66lj98a5fa60'
 })
 
 // 用户
@@ -19,8 +19,6 @@ const auth = app.auth({
 // 数据库实例
 const db = app.database()
 
-// 查询指令
-const _ = db.command
 
 /**
  * @name 集合名称
@@ -30,10 +28,6 @@ const _ = db.command
 
 // 数据库相关操作
 class CloudBase {
-    constructor() {
-
-    }
-
     // 通过_id查询一条数据
     findOne(name: string, _id: string) {
         return new Promise((resolve, reject) => {
@@ -127,15 +121,20 @@ class CloudBase {
 
 // 图片的相关操作
 class ImageUpload {
-    constructor() {
-
+    uid: string 
+    constructor(){
+        this.init()
     }
 
+    async init(){
+        const user = await auth.getCurrenUser()
+        this.uid = user.uid
+    }
     // 图片上传
-    picUpload(file: any, path: string = '/images/upload', name: string) {
+    picUpload(file: any, name: string) {
         return new Promise((resolve, reject) => {
             app.uploadFile({
-                cloudPath: path,
+                cloudPath: `${this.uid}/bg/${file.name}`,
                 filePath: file
             }).then((res: any) => {
                 app.getTempFileURL({
@@ -151,7 +150,7 @@ class ImageUpload {
                         downloadUrl: temp.fileList[0].download_url,
                         fileid: temp.fileList[0].fileid,
                         tempFileURL: temp.fileList[0].tempFileURL,
-                        cloudPath: path,
+                        cloudPath: `${this.uid}/bg/${file.name}`,
                         time: new Date()
                     }).then((res: any) => {
                         resolve(res)
@@ -168,10 +167,10 @@ class ImageUpload {
     }
 
     // 图片下载
-    picDownload(file_id: string) {
+    picDownload(fileId: string) {
         return new Promise((resolve, reject) => {
             app.downloadFile({
-                fileID: file_id
+                fileID: fileId
             }).then((res: any) => {
                 resolve(res)
             }).catch((err) => {
@@ -203,8 +202,6 @@ class ImageUpload {
  */
 // 用户登录注册相关操作
 class Auth {
-    constructor() { }
-
     // 登录
     singin(email: string, password: string): Promise<string> {
         return new Promise((resolve, reject) => {
@@ -241,10 +238,10 @@ class Auth {
     }
 
     // 登录状态判断
-    isLogin():Promise< any | null> {
+    isLogin(): Promise<any | null> {
         return new Promise((resolve, reject) => {
             auth.getLoginState().then((res: any) => {
-                resolve(res?.loginType)
+                resolve(res)
             }).catch(() => {
                 reject('未登录')
             })
@@ -288,7 +285,6 @@ class Auth {
 const DB = new CloudBase()
 const IMG = new ImageUpload()
 const AUTH = new Auth()
-
 
 export {
     DB,

@@ -17,7 +17,7 @@ import { Itabs } from "@/typings";
 import { defineComponent, PropType, ref } from "vue";
 import { Router, useRouter } from "vue-router";
 import Item from "./components/item.vue";
-import { Login } from "@/hooks/index.ts";
+import { AUTH } from "@/db/index";
 export default defineComponent({
   name: "MenuBar",
   components: {
@@ -30,8 +30,6 @@ export default defineComponent({
     const index = ref<number>(0);
     // 路由
     const router: Router = useRouter();
-    // 登录状态
-    const login = new Login();
     // tab change
     const tabChange = (tabIndex: number): void => {
       index.value = tabIndex;
@@ -47,37 +45,18 @@ export default defineComponent({
           });
           break;
         case 3:
-          {
-            login
-              .isLogin()
-              .then((res) => {
-                console.log(res);
-                if (res == "ANONYMOUS" || res == undefined) {
-                  router.push({
-                    name: "Login",
-                  });
-                } else {
-                  router.push({
-                    name: "Center",
-                  });
-                }
-
-                // if (res != "AnonymousAuth") {
-                //   router.push({
-                //     name: "Center",
-                //   });
-                // } else {
-                //   router.push({
-                //     name: "Login",
-                //   });
-                // }
+          // 判断是否是登录状态
+          AUTH.isLogin().then((res: any) => {
+            if (res != null) {
+              router.push({
+                name: 'Center'
               })
-              .catch(() => {
-                router.push({
-                  name: "Login",
-                });
-              });
-          }
+            }else{
+              router.push({
+                name: 'Login'
+              })
+            }
+          });
           break;
         case 4:
           router.push({
@@ -112,7 +91,7 @@ export default defineComponent({
   top: 15px;
   left: 0;
 
-  @media screen and (max-width: 400px){
+  @media screen and (max-width: 400px) {
     width: 100%;
     display: flex;
     justify-content: center;

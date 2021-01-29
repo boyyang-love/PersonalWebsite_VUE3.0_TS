@@ -34,7 +34,6 @@ import {
   watch,
 } from "vue";
 import ImgBox from "@/components/ImgBox/index.vue";
-import { Getbackground } from "@/hooks/index.ts";
 import { IbgLists } from "@/typings/index.ts";
 import { useRouter } from "vue-router";
 import { ElLoading } from "element-plus";
@@ -49,26 +48,9 @@ export default defineComponent({
       bgLists: [],
       type: "", //走马灯样式
     });
-    // 实列化
-    const bg = new Getbackground();
-    const router = useRouter();
-    // 获取背景图片
-    bg.getbg()
-      .then((res: any) => {
-        centerState.bgLists = res.data;
-        console.log(res)
-      })
-      .catch((err: any) => {
-        console.log(err);
-      });
-    // 退出
-    const goBack = (): void => {
-      router.back();
-    };
 
     return {
       ...toRefs(centerState),
-      goBack,
     };
   },
 });
@@ -79,7 +61,7 @@ export default defineComponent({
   width: 100vw;
   height: 100vh;
 
-  .cars { 
+  .cars {
     width: 100%;
     height: 100%;
     overflow: hidden;

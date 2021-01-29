@@ -1,4 +1,4 @@
-import { DB, AUTH, IMG } from "./db";
+import { DB, AUTH, IMG } from "./db"
 
 export {
     DB,

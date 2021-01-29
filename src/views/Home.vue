@@ -1,8 +1,6 @@
 <template>
   <div class="home">
-    <div class="bg">
-      <img :src="bg" alt="" />
-    </div>
+    <div class="bg"></div>
     <div class="content">
       <div class="title">
         <h1>BOYYANG.LOVE</h1>
@@ -73,16 +71,17 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, ref, toRefs } from "vue";
+import { defineComponent, ref } from "vue";
 import MenuBar from "@/components/MenuBar/index.vue";
-import { IhomeState, Itabs } from "@/typings";
-import { FileUp, Getbackground } from "@/hooks/index.ts";
+import { Itabs } from "@/typings";
+import { DB, IMG } from "@/db/index";
 export default defineComponent({
   name: "Home",
   components: {
     MenuBar,
   },
   setup() {
+    // tab配置
     const tabs: Itabs[] = [
       {
         tabIndex: 1,
@@ -110,78 +109,23 @@ export default defineComponent({
         icon: "icon-iconset0142",
       },
     ];
-
-    const state = reactive<IhomeState>({
-      bg: require("../assets/images/鬼灭之刃蝴蝶忍4k高清电脑壁纸3840x2160_彼岸图网.jpg"),
-      id: "1",
-      fileID: "1",
-    });
-
-    const bgs = reactive({
-      bglists: [],
-      index: JSON.parse(localStorage.getItem("bgIndex")) || 0,
-    });
-   
-    // 实列化文件上传函数
-    const file = new FileUp(state, '');
-    // 获取背景图片
-    const getbg = new Getbackground();
-    getbg.getbg().then((res: any) => {
-      if (res.data.length != 0) {
-        bgs.bglists = res.data;
-        state.bg = res.data[bgs.index].tempFileURL;
-      } else {
-        return;
-      }
-    });
+    // 图片
     const img = ref<any>(null);
+    DB.findAll("usersBg").then((res: any) => {
+      console.log(res);
+    });
 
     const imgUp = (): void => {
-      file.fileUpdate(img.value.files[0]);
-    };
-
-    // 上一背景
-    const prev = (): void => {
-      if (bgs.bglists.length != 0) {
-        if (bgs.index == 1) {
-          bgs.index = bgs.bglists.length;
-          state.bg = bgs.bglists[0].tempFileURL;
-          localStorage.setItem("bgIndex", JSON.stringify(bgs.index));
-        } else {
-          bgs.index--;
-          state.bg = bgs.bglists[bgs.index].tempFileURL;
-          localStorage.setItem("bgIndex", JSON.stringify(bgs.index));
-        }
-      } else {
-        return;
-      }
-    };
-
-    // 下一背景
-    const next = (): void => {
-      if (bgs.bglists.length != 0) {
-        if (bgs.index == bgs.bglists.length - 1) {
-          bgs.index = 0;
-          state.bg = bgs.bglists[bgs.index].tempFileURL;
-          localStorage.setItem("bgIndex", JSON.stringify(bgs.index));
-        } else {
-          bgs.index++;
-          state.bg = bgs.bglists[bgs.index].tempFileURL;
-          localStorage.setItem("bgIndex", JSON.stringify(bgs.index));
-        }
-      } else {
-        return;
-      }
+      const file = img.value.files[0];
+      IMG.picUpload(file, "usersBg").then((res: any) => {
+        console.log(res);
+      });
     };
 
     return {
-      img,
       tabs,
+      img,
       imgUp,
-      prev,
-      next,
-      ...toRefs(bgs),
-      ...toRefs(state),
     };
   },
 });
@@ -355,7 +299,7 @@ export default defineComponent({
   }
 }
 
-a{
+a {
   text-decoration: none;
 }
 
