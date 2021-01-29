@@ -98,7 +98,7 @@ server.interceptors.response.use(
 /**
  * 导出get请求方法
  * @url 请求地址
- * @params get请求参数
+ * @param get 请求参数
  */
 export function get(url: string, params?: any): Promise<AxiosResponse> | Promise<AxiosResponse<any>> {
     return new Promise((resolve, reject) => {
