@@ -1,56 +1,75 @@
 <template>
   <div class="center">
-    <div class="cars">
-      <div class="header">
-        <el-page-header @back="goBack" content="背景图片"></el-page-header>
-      </div>
-      <img-box :images="bgLists"></img-box>
-      <!-- <el-carousel
-        :interval="2000"
-        :type="type"
-        height="95vh"
-        indicator-position="none"
-        :initial-index="1"
-        :autoplay="true"
-        :loop="true"
-      >
-        <el-carousel-item v-for="item in bgLists" :key="item._id">
-          <div class="img">
-            <img :src="item.tempFileURL" alt="" class="el-img"/>
-          </div>
-        </el-carousel-item>
-      </el-carousel> -->
+    <div class="header">
+      <el-page-header @back="goBack" content="背景图片"></el-page-header>
     </div>
+    <el-timeline>
+      <el-timeline-item
+        v-for="(item, index) in images"
+        :key="index"
+        color="blue"
+      >
+        {{ item.name }}
+        <div class="download">
+          <i
+            class="iconfont icon-shuju-zhichi-01"
+            @click="download(item.downloadUrl, item.fileid)"
+          ></i>
+          <img
+            src="../assets/images/Blueocean01.png"
+            v-lazy="item.tempFileURL"
+            alt=""
+          />
+        </div>
+      </el-timeline-item>
+    </el-timeline>
   </div>
 </template>
 
 <script lang="ts">
-import {
-  defineComponent,
-  onBeforeMount,
-  onUnmounted,
-  reactive,
-  toRefs,
-  watch,
-} from "vue";
-import ImgBox from "@/components/ImgBox/index.vue";
-import { IbgLists } from "@/typings/index.ts";
+import { defineComponent, ref } from "vue";
 import { useRouter } from "vue-router";
+import { DB, IMG } from "@/db/index";
 import { ElLoading } from "element-plus";
 export default defineComponent({
   name: "Center",
-  components: {
-    ImgBox,
-  },
+  components: {},
   setup() {
-    // center 数据
-    const centerState: IbgLists = reactive({
-      bgLists: [],
-      type: "", //走马灯样式
+    // 图片集合
+    const images = ref<any[]>();
+    const router = useRouter();
+
+    DB.findAll("usersBg").then((res: any) => {
+      console.log(res);
+      images.value = res.data;
     });
 
+    // 返回上一页
+    const goBack = (): void => {
+      router.push({
+        name: "Home",
+      });
+    };
+
+    // 下载图片
+    const download = (downloadid: string, fileid: string): void => {
+      window.open(downloadid, "_black");
+      // const flag = navigator.userAgent.match(
+      //   /(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i
+      // );
+      // if (flag) {
+      //   IMG.picDownload(fileid).then((res: any) => {
+      //     console.log(res);
+      //   });
+      // }else{
+      //   window.open(downloadid, '_black')
+      // }
+    };
+
     return {
-      ...toRefs(centerState),
+      images,
+      goBack,
+      download,
     };
   },
 });
@@ -58,32 +77,55 @@ export default defineComponent({
 
 <style scoped lang="scss">
 .center {
-  width: 100vw;
-  height: 100vh;
-
-  .cars {
+  box-sizing: border-box;
+  margin: 60px 20px 25px 20px;
+  .header {
     width: 100%;
-    height: 100%;
-    overflow: hidden;
-    .header {
-      display: flex;
-      align-items: center;
-      cursor: pointer;
-    }
+    position: fixed;
+    top: 0;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    background-color: rgba(11, 143, 148, 0.6);
+    z-index: 6;
   }
 
-  .img {
+  // .imgbox {
+  //   display: flex;
+  //   justify-content: center;
+  //   align-items: center;
+  // }
+
+  img {
     width: 100%;
-    height: 100%;
+    border-radius: 10px;
+    box-shadow: 8px 4px 8px 0px rgba(11, 143, 148, 0.6);
+  }
+
+  .el-timeline-item__content {
     display: flex;
     justify-content: center;
     align-items: center;
-    background: rgba(20, 19, 19, 1);
-    border-radius: 5px;
   }
 
-  .el-img {
-    height: 100%;
+  .to-top {
+    position: absolute;
+    bottom: 0;
+    z-index: 9;
+  }
+
+  .download {
+    i {
+      font-size: 25px;
+      color: black;
+      position: absolute;
+      bottom: 5%;
+      right: 5%;
+      &:hover {
+        color: rgb(204, 46, 73);
+      }
+    }
   }
 }
 </style>

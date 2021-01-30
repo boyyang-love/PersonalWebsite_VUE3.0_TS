@@ -121,14 +121,17 @@ class CloudBase {
 
 // 图片的相关操作
 class ImageUpload {
-    uid: string 
-    constructor(){
+    uid: string
+    constructor() {
         this.init()
     }
 
-    async init(){
+    async init() {
         const user = await auth.getCurrenUser()
-        this.uid = user.uid
+        if (user) {
+            this.uid = user.uid
+        }
+
     }
     // 图片上传
     picUpload(file: any, name: string) {
@@ -203,25 +206,25 @@ class ImageUpload {
 // 用户登录注册相关操作
 class Auth {
     // 登录
-    singin(email: string, password: string): Promise<string> {
+    singin(email: string, password: string): Promise<boolean> {
         return new Promise((resolve, reject) => {
             auth.signInWithEmailAndPassword(email, password)
                 .then(() => {
-                    resolve('登录成功')
+                    resolve(true)
                 }).catch(() => {
-                    reject('账号或密码错误')
+                    reject(false)
                 })
         })
     }
 
     // 注册
-    singup(email: string, password: string): Promise<string> {
+    singup(email: string, password: string): Promise<boolean> {
         return new Promise((resolve, reject) => {
             auth.signUpWithEmailAndPassword(email, password)
                 .then(() => {
-                    resolve('邮件发送成功请前往邮箱点击确认')
+                    resolve(true)
                 }).catch(() => {
-                    reject('注册失败,请确定账号未被注册过')
+                    reject(false)
                 })
         })
     }

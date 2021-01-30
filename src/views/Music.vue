@@ -1,6 +1,6 @@
 <template>
   <div class="music">
-    
+    <el-empty description="开发中"></el-empty>
   </div>
 </template>
 

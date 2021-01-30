@@ -1,6 +1,6 @@
 <template>
   <div class="contact">
-    <h1>this is contact page</h1>
+    <el-empty description="开发中"></el-empty>
   </div>
 </template>
 

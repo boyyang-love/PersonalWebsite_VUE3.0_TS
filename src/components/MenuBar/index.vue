@@ -7,7 +7,7 @@
       :index="index"
       :icon="tab.icon"
       @click="tabChange(tab.tabIndex)"
-      >{{ tab.tabName }}</item
+      ></item
     >
   </div>
 </template>
@@ -81,15 +81,19 @@ export default defineComponent({
 
 <style scoped lang='scss'>
 .menuBar {
-  width: 40%;
+  width: 100%;
+  height: 70%;
   position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
   cursor: pointer;
-  position: absolute;
-  top: 15px;
-  left: 0;
+  // position: absolute;
+  // top: 15px;
+  // left: 10px;
+  z-index: 9;
+  background-color: rgba(190, 55, 55, 0.5);
 
   @media screen and (max-width: 400px) {
     width: 100%;

@@ -1,6 +1,7 @@
 <template>
   <div class="about">
     <el-page-header @back="goBack" content="关于"> </el-page-header>
+    <el-empty description="开发中"></el-empty>
   </div>
 </template>
 

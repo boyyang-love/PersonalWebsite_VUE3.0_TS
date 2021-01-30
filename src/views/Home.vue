@@ -1,6 +1,19 @@
 <template>
   <div class="home">
-    <div class="bg"></div>
+    <div class="bg">
+      <el-carousel
+        indicator-position="outside"
+        height="100vh"
+        :interval="2000"
+        :initial-index="1"
+        :loop='true'
+        arrow="hover"
+      >
+        <el-carousel-item v-for="item in images" :key="item._id">
+          <img :src="item.tempFileURL" alt="" />
+        </el-carousel-item>
+      </el-carousel>
+    </div>
     <div class="content">
       <div class="title">
         <h1>BOYYANG.LOVE</h1>
@@ -66,15 +79,31 @@
         <span class="line4"></span>
       </div>
     </div>
-    <menu-bar :tabs="tabs"></menu-bar>
+    <!-- tab -->
+    <div class="setting">
+      <i class="el-icon-s-tools" @click="setting"></i>
+    </div>
+    <el-drawer title="我是标题" v-model="drawer" :with-header="false">
+      <menu-bar :tabs="tabs"></menu-bar>
+      <div class="bottom">
+        <div class="login">
+          <i class="iconfont icon-denglu" @click="login"></i>
+        </div>
+        <div class="exit">
+          <i class="iconfont icon-tuichu1" @click="exit"></i>
+        </div>
+      </div>
+    </el-drawer>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from "vue";
+import { defineComponent, ref, h } from "vue";
 import MenuBar from "@/components/MenuBar/index.vue";
 import { Itabs } from "@/typings";
-import { DB, IMG } from "@/db/index";
+import { DB, IMG, AUTH } from "@/db/index";
+import { ElMessage } from "element-plus";
+import router from "@/router";
 export default defineComponent({
   name: "Home",
   components: {
@@ -109,16 +138,99 @@ export default defineComponent({
         icon: "icon-iconset0142",
       },
     ];
-    // 图片
+
+    // 图片集合
+    const images = ref<any[]>();
+
+    // 图片文件信息
     const img = ref<any>(null);
+
+    // 右侧弹框
+    const drawer = ref<boolean>(false);
+
+    // 获取图片
     DB.findAll("usersBg").then((res: any) => {
-      console.log(res);
+      if (res.code == "PERMISSION_DENIED" || res.data.length == 0) {
+        images.value = [
+          {
+            tempFileURL: require("../assets/images/长发美女居家写真4k壁纸3840x2160_彼岸图网.jpg"),
+          },
+          {
+            tempFileURL: require("../assets/images/鬼灭之刃蝴蝶忍4k高清电脑壁纸3840x2160_彼岸图网.jpg"),
+          },
+        ];
+      } else {
+        images.value = res.data;
+      }
     });
 
+    // 图片上传
     const imgUp = (): void => {
       const file = img.value.files[0];
       IMG.picUpload(file, "usersBg").then((res: any) => {
-        console.log(res);
+        if (res) {
+          ElMessage({
+            message: h("p", null, [
+              h("span", null, "提示"),
+              h("i", { style: "color: teal" }, "图片上传成功"),
+            ]),
+          });
+        }
+      });
+    };
+
+    // 上一张图片
+    const prev = (): void => {
+      const len = images.value.length - 1;
+    };
+
+    //  下一张图片
+    const next = (): void => {
+      const len = images.value.length;
+    };
+
+    // setting
+    const setting = (): void => {
+      drawer.value = !drawer.value;
+    };
+
+    // 登录
+    const login = (): void => {
+      AUTH.isLogin()
+        .then((res: any) => {
+          if (res != null) {
+            ElMessage({
+              message: h("p", null, [
+                h("span", null, "你已经登录"),
+                h("i", { style: "color: teal" }, ""),
+              ]),
+            });
+          } else {
+            router.push({
+              name: "Login",
+            });
+          }
+        })
+        .catch((err) => {
+          ElMessage({
+            message: h("p", null, [
+              h("span", null, err),
+              h("i", { style: "color: teal" }, ""),
+            ]),
+          });
+        });
+    };
+
+    // 退出登录
+    const exit = (): void => {
+      AUTH.signout().then((res: any) => {
+        ElMessage({
+          message: h("p", null, [
+            h("span", null, "退出登录"),
+            h("i", { style: "color: teal" }, "成功！"),
+          ]),
+        });
+        drawer.value = false;
       });
     };
 
@@ -126,6 +238,13 @@ export default defineComponent({
       tabs,
       img,
       imgUp,
+      images,
+      prev,
+      next,
+      drawer,
+      setting,
+      exit,
+      login,
     };
   },
 });
@@ -140,6 +259,9 @@ export default defineComponent({
   align-items: center;
   position: relative;
   overflow: hidden;
+  background-image: url('../assets/images/鬼灭之刃蝴蝶忍4k高清电脑壁纸3840x2160_彼岸图网.jpg');
+  background-position: center;
+  background-size: cover;
   .bg {
     width: 100%;
     height: 100%;
@@ -295,6 +417,63 @@ export default defineComponent({
         left: 0;
         animation: line4 1s linear infinite;
       }
+    }
+  }
+  .setting {
+    position: absolute;
+    z-index: 9;
+    bottom: 10%;
+    left: 5%;
+    i {
+      font-size: 35px;
+      color: rgb(217, 255, 192);
+      cursor: pointer;
+      &:hover {
+        color: rgb(105, 61, 61);
+      }
+      animation: circle 2s linear infinite;
+    }
+  }
+  .bottom {
+    height: 30%;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(2, 1fr);
+    justify-content: center;
+    align-items: center;
+  }
+  .login {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    i {
+      font-size: 35px;
+      &:hover {
+        color: rgb(126, 52, 52);
+      }
+    }
+  }
+  .exit {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    i {
+      font-size: 55px;
+      color: pink;
+      &:hover {
+        color: rgb(61, 105, 92);
+      }
+    }
+  }
+
+  @keyframes circle {
+    0% {
+      transform: rotateZ(0deg);
+    }
+    100% {
+      transform: rotateZ(360deg);
     }
   }
 }

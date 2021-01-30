@@ -25,7 +25,9 @@ export default defineComponent({
 
 <style scoped lang='scss'>
 .item {
-  height: 100%;
+  box-sizing: border-box;
+  width: 100%;
+  height: 75px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -33,12 +35,12 @@ export default defineComponent({
   color: rgb(0, 0, 0);
 
   i {
-    font-size: 16px;
+    font-size: 26px;
     margin: 5px;
     color: rgb(0, 0, 0);
   }
   &:hover {
-    // background-color: rgba(52, 160, 93, 0.5);
+    background-color: rgba(10, 0, 100, 0.5);
     color: #f7f7f7;
     font-weight: bold;
     i {
