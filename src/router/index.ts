@@ -33,7 +33,7 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import(/* webpackChunkName: "music" */ '../views/Login.vue')
   },
   {
-    path: '/musiclistdetail/:id',
+    path: '/musiclistdetail',
     name: 'MusiclistDetail',
     component: () => import(/* webpackChunkName: "music" */ '../views/MusiclistDetail.vue')
   },

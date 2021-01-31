@@ -7,14 +7,20 @@
       <el-timeline-item
         v-for="(item, index) in images"
         :key="index"
-        color="blue"
+        color="#ff461f"
       >
         {{ item.name }}
         <div class="download">
-          <i
-            class="iconfont icon-shuju-zhichi-01"
-            @click="download(item.downloadUrl, item.fileid)"
-          ></i>
+          <div class="icon">
+            <i
+              class="iconfont icon-xiazai1"
+              @click="download(item.downloadUrl, item.fileid)"
+            ></i>
+            <i
+              class="iconfont icon-qingchu"
+              @click="del(item.tempFileURL, item._id)"
+            ></i>
+          </div>
           <img
             src="../assets/images/Blueocean01.png"
             v-lazy="item.tempFileURL"
@@ -27,10 +33,10 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from "vue";
+import { defineComponent, ref, h } from "vue";
 import { useRouter } from "vue-router";
 import { DB, IMG } from "@/db/index";
-import { ElLoading } from "element-plus";
+import { ElLoading, ElMessageBox, ElMessage } from "element-plus";
 export default defineComponent({
   name: "Center",
   components: {},
@@ -40,7 +46,6 @@ export default defineComponent({
     const router = useRouter();
 
     DB.findAll("usersBg").then((res: any) => {
-      console.log(res);
       images.value = res.data;
     });
 
@@ -54,22 +59,39 @@ export default defineComponent({
     // 下载图片
     const download = (downloadid: string, fileid: string): void => {
       window.open(downloadid, "_black");
-      // const flag = navigator.userAgent.match(
-      //   /(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i
-      // );
-      // if (flag) {
-      //   IMG.picDownload(fileid).then((res: any) => {
-      //     console.log(res);
-      //   });
-      // }else{
-      //   window.open(downloadid, '_black')
-      // }
+    };
+
+    // 删除图片
+    const del = (url: string, _id: string): void => {
+      ElMessageBox({
+        title: "是否删除当前图片",
+        message: h("img", { src: url, style: "width: 100%" }, ""),
+        showCancelButton: true,
+        callback: function (action, instance) {
+          console.log(action);
+          if (action == "confirm") {
+            const loading = ElLoading.service({
+              fullscreen: true,
+            });
+            DB.del("usersBg", _id).then((res: any) => {
+              loading.close();
+              router.go(0)
+              ElMessage({
+                message: "删除成功！",
+                type: "success",
+                showClose: true,
+              });
+            });
+          }
+        },
+      });
     };
 
     return {
       images,
       goBack,
       download,
+      del,
     };
   },
 });
@@ -91,12 +113,6 @@ export default defineComponent({
     z-index: 6;
   }
 
-  // .imgbox {
-  //   display: flex;
-  //   justify-content: center;
-  //   align-items: center;
-  // }
-
   img {
     width: 100%;
     border-radius: 10px;
@@ -116,14 +132,19 @@ export default defineComponent({
   }
 
   .download {
-    i {
-      font-size: 25px;
-      color: black;
+    position: relative;
+    .icon {
       position: absolute;
-      bottom: 5%;
-      right: 5%;
-      &:hover {
-        color: rgb(204, 46, 73);
+      right: 0;
+      top: 5px;
+      i {
+        margin: 10px;
+        font-size: 20px;
+        color: black;
+        font-weight: bolder;
+        &:hover {
+          color: rgb(204, 46, 73);
+        }
       }
     }
   }

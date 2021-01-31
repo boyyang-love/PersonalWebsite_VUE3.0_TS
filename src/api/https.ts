@@ -29,7 +29,6 @@ server.interceptors.request.use(
         }
         // const token = '1111111';        
         // token && (config.headers.Authorization = token);
-        console.log(config)
         return config;
     },
     (error) => {

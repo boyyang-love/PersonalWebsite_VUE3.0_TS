@@ -422,7 +422,7 @@ export default defineComponent({
   .setting {
     position: absolute;
     z-index: 9;
-    bottom: 10%;
+    top: 5%;
     left: 5%;
     i {
       font-size: 35px;

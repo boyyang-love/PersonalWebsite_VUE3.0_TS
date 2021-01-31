@@ -16,7 +16,6 @@
 
 <script lang='ts'>
 import { defineComponent, reactive, toRefs } from "vue";
-import { Getbackground } from "@/hooks/index.ts";
 import { Ibackground, IDynamicState } from "@/typings";
 interface Istate {
   images: Array<Ibackground>;
