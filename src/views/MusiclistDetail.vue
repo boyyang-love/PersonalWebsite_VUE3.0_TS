@@ -8,10 +8,7 @@
     <!-- 创建者图片背景 -->
     <div class="bg">
       <div class="user">
-        <img
-          :src="coverImgUrl"
-          alt=""
-        />
+        <img :src="coverImgUrl" alt="" />
       </div>
       <div class="des">
         <div>{{ list.description }}</div>
@@ -36,7 +33,7 @@
               type="warning"
               icon="el-icon-star-off"
               circle
-              @click="todetail(item.id)"
+              @click="musicplay(item.id)"
             ></el-button>
           </div>
         </div>
@@ -48,16 +45,18 @@
 <script lang="ts">
 import { defineComponent, reactive, ref, toRefs } from "vue";
 import { useRoute, useRouter } from "vue-router";
-import { getMusicListDetail } from "@/api/api";
+import { getMusicListDetail, getMusicUrl } from "@/api/api";
+import { useStore } from "vuex";
 export default defineComponent({
   name: "MusiclistDetail",
   setup() {
     // 获取路由元信息
     const route = useRoute();
     const router = useRouter();
+    const store = useStore();
     const state = reactive({
       list: "",
-      coverImgUrl: ''
+      coverImgUrl: "",
     });
 
     // 歌单详情
@@ -69,7 +68,7 @@ export default defineComponent({
     // 调用接口
     getMusicListDetail({ id: route.query.id }).then((res: any) => {
       state.list = res.playlist;
-      state.coverImgUrl = res.playlist.coverImgUrl
+      state.coverImgUrl = res.playlist.coverImgUrl;
       musicLists.value = res.playlist.tracks;
       creator.value = res.playlist.creator;
     });
@@ -79,11 +78,20 @@ export default defineComponent({
       router.back();
     };
 
+    // 获取音乐url
+    const musicplay = (id): void => {
+      getMusicUrl({ id: id }).then((res) => {
+        const payload = res.data[0].url
+        store.commit('changeUrl', payload)
+      });
+    };
+
     return {
       ...toRefs(state),
       musicLists,
       creator,
       goBacks,
+      musicplay,
     };
   },
 });

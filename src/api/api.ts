@@ -13,8 +13,12 @@ const getMusicList = (params?: any) => get('/top/playlist', params)
 // 获取精品歌单详情
 const getMusicListDetail = (params?: any) => get('/playlist/detail', params)
 
+// 获取音乐url
+const getMusicUrl = (params?: any) => get('/song/url', params)
+
 export {
     getBanner,
     getMusicList,
-    getMusicListDetail
+    getMusicListDetail,
+    getMusicUrl
 }

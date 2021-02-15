@@ -90,7 +90,7 @@ export default defineComponent({
       });
     });
 
-    // 去歌单详情
+    // 获取歌单详情
     const todetail = (id: number | string) => {
       router.push({
         name: "MusiclistDetail",

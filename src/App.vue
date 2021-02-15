@@ -1,6 +1,29 @@
 <template>
   <router-view></router-view>
+  <music-player :musicUrl="musicUrl"></music-player>
 </template>
+
+<script lang="ts">
+import Vue, { computed, defineComponent, ref } from "vue";
+import MusicPlayer from "@/components/MusicPlayer/index.vue";
+import { useStore } from "vuex";
+export default defineComponent({
+  components: {
+    MusicPlayer,
+  },
+  setup() {
+    const store = useStore();
+
+    const musicUrl = computed(() => {
+      return store.state.musicUrl;
+    });
+
+    return {
+      musicUrl,
+    };
+  },
+});
+</script>
 
 <style lang="scss">
 * {
