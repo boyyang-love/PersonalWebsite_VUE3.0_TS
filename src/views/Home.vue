@@ -95,6 +95,10 @@
       </div>
     </el-drawer>
   </div>
+
+  <div class="music-player">
+    <audio :src="musicUrl" autoplay="autoplay">1111111111</audio>
+  </div>
 </template>
 
 <script lang="ts">

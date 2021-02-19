@@ -176,6 +176,7 @@ el-carousel {
   align-items: center;
   grid-row-gap: 20px;
   grid-column-gap: 20px;
+  margin-top: 45px;
   .name {
     width: 100%;
     height: 24px;

@@ -111,7 +111,7 @@ export default defineComponent({
 .bg {
   box-sizing: border-box;
   width: 100%;
-  height: 160px;
+  max-height: 300px;
   margin-top: 45px;
   display: flex;
   overflow: hidden;
@@ -127,6 +127,7 @@ export default defineComponent({
     }
   }
   .des {
+    text-overflow: ellipsis;
     padding: 10px;
   }
 }
