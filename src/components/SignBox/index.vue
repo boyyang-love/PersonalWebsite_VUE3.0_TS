@@ -7,17 +7,17 @@
     <div class="account input-box">
       <input type="text" maxlength="18" v-model="account" />
       <label for="" class="label">Account</label>
-      <i class="iconfont icon-shanchuqingchuqingkong" @click="clear(1)"></i>
+      <i class="iconfont icon-qingchu" @click="clear(1)"></i>
     </div>
     <div class="password input-box">
       <input type="password" maxlength="20" v-model="password" />
       <label for="" class="label">PassWord</label>
-      <i class="iconfont icon-shanchuqingchuqingkong" @click="clear(2)"></i>
+      <i class="iconfont icon-qingchu" @click="clear(2)"></i>
     </div>
     <div class="repassword input-box" v-show="isRepasswordShow">
       <input type="password" maxlength="20" v-model="repassword" />
       <label for="" class="label">Repeat PassWord</label>
-      <i class="iconfont icon-shanchuqingchuqingkong" @click="clear(3)"></i>
+      <i class="iconfont icon-qingchu" @click="clear(3)"></i>
     </div>
     <div class="btns">
       <div class="btn" @click="signOut">
@@ -177,7 +177,7 @@ export default defineComponent({
 
     .iconfont {
       position: absolute;
-      right: 45px;
+      right: 20px;
       font-size: 20px;
       color: rgb(32, 148, 41);
       cursor: pointer;
@@ -207,13 +207,17 @@ export default defineComponent({
 
     .iconfont {
       position: absolute;
-      color: rgb(236, 46, 46);
+      color: rgb(32, 148, 41);
       bottom: 0;
-      right: 30px;
-      font-size: 30px;
+      right: 0;
+      font-size: 23px;
       opacity: 1;
       transition: all 0.5s linear;
       cursor: pointer;
+
+      &:hover {
+        color: rgb(255, 0, 0);
+      }
     }
 
     input {
