@@ -18,8 +18,4 @@ export default defineComponent({
 </script>
 
 <style scoped lang="scss">
-.music-player {
-  width: 100%;
-  height: 50px;
-}
 </style>
