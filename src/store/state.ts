@@ -1,3 +1,4 @@
 export default {
-   musicUrl: '' //音乐链接
+   musicUrl: '' ,//音乐链接
+   musicPic: ''
 }

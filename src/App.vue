@@ -1,6 +1,6 @@
 <template>
   <router-view></router-view>
-  <music-player :musicUrl="musicUrl"></music-player>
+  <music-player :musicUrl="musicUrl" :musicPic="musicPic"></music-player>
 </template>
 
 <script lang="ts">
@@ -18,8 +18,13 @@ export default defineComponent({
       return store.state.musicUrl;
     });
 
+    const musicPic = computed(() => {
+      return store.state.musicPic;
+    });
+
     return {
       musicUrl,
+      musicPic
     };
   },
 });

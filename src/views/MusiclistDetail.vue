@@ -33,7 +33,7 @@
               type="warning"
               icon="el-icon-star-off"
               circle
-              @click="musicplay(item.id)"
+              @click="musicplay(item.id, item.al.picUrl)"
             ></el-button>
           </div>
         </div>
@@ -79,10 +79,10 @@ export default defineComponent({
     };
 
     // 获取音乐url
-    const musicplay = (id): void => {
+    const musicplay = (id, pic): void => {
       getMusicUrl({ id: id }).then((res) => {
-        const payload = res.data[0].url
-        store.commit('changeUrl', payload)
+        const payload = { musicurl: res.data[0].url, musicpic: pic};
+        store.commit("changeUrl", payload);
       });
     };
 
