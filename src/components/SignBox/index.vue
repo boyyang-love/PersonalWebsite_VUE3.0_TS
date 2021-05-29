@@ -238,7 +238,7 @@ export default defineComponent({
       }
 
       @media screen and (max-width: 400px){
-        padding-left: 80px;
+        padding-left: 10px;
       }
     }
   }
@@ -377,5 +377,12 @@ export default defineComponent({
   100% {
     transform: rotateZ(360deg);
   }
+}
+
+
+@media screen and (max-width: 700px) {
+     .signbox .input-box .label {
+       font-size: 10px;
+     }
 }
 </style>

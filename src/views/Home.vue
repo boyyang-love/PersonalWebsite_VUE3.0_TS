@@ -79,7 +79,7 @@
                 </el-tooltip>
             </div>
         </div>
-        <el-drawer v-model="drawer" :with-header="false" size="5%">
+        <el-drawer v-model="drawer" :with-header="false" size="100px">
             <menu-bar :tabs="tabs"></menu-bar>
             <div class="bottom">
                 <div class="login">
@@ -581,6 +581,25 @@ a {
 
     100% {
         transform: translateY(-100%);
+    }
+}
+
+@media screen and (max-width: 700px) {
+    .title {
+        h1 {
+            font-size: 26px;
+        }
+
+        .iconfont {
+            font-size: 25px !important;
+            right: -30px;
+        }
+    }
+
+    .setting {
+        .el-icon-s-tools {
+            font-size: 25px !important;
+        }
     }
 }
 </style>

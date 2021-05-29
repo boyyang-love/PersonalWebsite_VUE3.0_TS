@@ -132,7 +132,7 @@ export default defineComponent({
         }
 
         // 个人中心
-        const toCenter = (): void =>{
+        const toCenter = (): void => {
             router.push({
                 name: 'Center'
             })
@@ -272,5 +272,42 @@ input {
 
 input::-webkit-input-placeholder {
     color: #be002f;
+}
+
+@media screen and (max-width: 700px) {
+    .user-info {
+        align-items: start;
+        padding-top: 30px;
+    }
+
+    .user-info-box {
+        width: 85%;
+        height: 55vh;
+        overflow: hidden;
+    }
+
+    .user-info-pos {
+        flex-direction: row-reverse;
+    }
+
+    .box-top {
+        padding: 10px;
+
+        i {
+            font-size: 20px;
+        }
+    }
+
+    .avatar,
+    .user-info-header {
+        width: 100px;
+        height: 100px;
+    }
+
+
+    input {
+        width: 80px;
+        height: 30px;
+    }
 }
 </style>

@@ -144,4 +144,11 @@ export default defineComponent({
         }
     }
 }
+
+
+@media screen and (max-width: 700px) {
+    .download {
+        width: 100% !important;
+    }
+}
 </style>

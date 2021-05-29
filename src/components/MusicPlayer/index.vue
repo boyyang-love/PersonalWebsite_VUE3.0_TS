@@ -103,4 +103,20 @@ export default defineComponent({
   background-position: center;
   background-size: cover;
 }
+
+@media screen and (max-width: 700px) {
+  .music-player {
+    left: 5px;
+    bottom: 5px;
+  }
+
+  .player {
+    height: 45px;
+  }
+
+  .music-img {
+    width: 35px;
+    height: 35px;
+  }
+}
 </style>

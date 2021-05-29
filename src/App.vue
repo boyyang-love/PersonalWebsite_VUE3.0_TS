@@ -71,4 +71,13 @@ export default defineComponent({
     box-shadow: inset 0 0 6px rgba(202, 12, 12, 0.3);
     background-color: #555;
 }
+
+
+@media screen and (max-width: 700px) {
+    ::-webkit-scrollbar {
+    width: 2px;
+    height: 1px;
+    background-color: #f5f5f5;
+}
+}
 </style>

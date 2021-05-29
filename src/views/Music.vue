@@ -191,4 +191,11 @@ el-carousel {
     height: 100%;
   }
 }
+
+
+@media screen and (max-width: 700px) {
+  .banner-phone {
+    display: none;
+  }
+}
 </style>
