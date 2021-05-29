@@ -282,7 +282,7 @@ input::-webkit-input-placeholder {
 
     .user-info-box {
         width: 85%;
-        height: 55vh;
+        height: 365px;
         overflow: hidden;
     }
 
