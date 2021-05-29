@@ -29,7 +29,7 @@ export default defineComponent({
           console.log(res);
           if (res) {
             router.push({
-              name: "Center",
+              name: "UserInfo",
             });
             ElMessage({
               message: h("p", null, [

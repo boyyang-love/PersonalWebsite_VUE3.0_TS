@@ -134,10 +134,10 @@ class ImageUpload {
 
     }
     // 图片上传
-    picUpload(file: any, name: string) {
+    picUpload(file: any, name: string, pos='bg') {
         return new Promise((resolve, reject) => {
             app.uploadFile({
-                cloudPath: `${this.uid}/bg/${file.name}`,
+                cloudPath: `${this.uid}/${pos}/${file.name}`,
                 filePath: file
             }).then((res: any) => {
                 app.getTempFileURL({
@@ -153,7 +153,7 @@ class ImageUpload {
                         downloadUrl: temp.fileList[0].download_url,
                         fileid: temp.fileList[0].fileid,
                         tempFileURL: temp.fileList[0].tempFileURL,
-                        cloudPath: `${this.uid}/bg/${file.name}`,
+                        cloudPath: `${this.uid}/${pos}/${file.name}`,
                         time: new Date()
                     }).then((res: any) => {
                         resolve(res)
@@ -265,15 +265,11 @@ class Auth {
     }
 
     // 更新当前用户信息
-    updateUserinfo(nickName: string, gender: string, avatarUrl: string) {
+    updateUserinfo(params: any) {
         return new Promise((resolve, reject) => {
             const user = auth.currentUser
             if (user) {
-                user.update({
-                    nickName: nickName,
-                    gender: gender,
-                    avatarUrl: avatarUrl
-                }).then((res: any) => {
+                user.update(params).then((res: any) => {
                     resolve(res)
                 }).catch((err: any) => {
                     reject(err)

@@ -3,7 +3,9 @@
     <audio :src="musicUrl" autoplay="autoplay" ref="audio"></audio>
     <div class="player">
       <i class="iconfont icon-bofang5" @click="play"></i>
-      <img :src="musicPic" alt="" class="music-img" v-if="musicPic !='' ">
+      <div class="music-img">
+        <img :src="musicPic" alt="" class="music-img" v-if="musicPic !='' ">
+      </div>
       <i class="iconfont icon-zanting" @click="stop"></i>
     </div>
   </div>
@@ -96,5 +98,9 @@ export default defineComponent({
   height: 55px;
   width: 55px;
   border-radius: 100%;
+  background-color: #2edfa3;
+  background-image: url('../../assets/images/立秋.png');
+  background-position: center;
+  background-size: cover;
 }
 </style>
