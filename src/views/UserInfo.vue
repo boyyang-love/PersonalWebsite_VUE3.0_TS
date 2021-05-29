@@ -244,7 +244,6 @@ export default defineComponent({
 }
 
 .avatar {
-    width: 125px;
     height: 125px;
 }
 
@@ -298,12 +297,15 @@ input::-webkit-input-placeholder {
         }
     }
 
-    .avatar,
+    .avatar {
+        //    width: 100px;
+        height: 100px;
+    }
+
     .user-info-header {
         width: 100px;
         height: 100px;
     }
-
 
     input {
         width: 80px;
