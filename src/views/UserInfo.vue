@@ -36,6 +36,7 @@
                 <div class="save">
                     <el-button type="success" round @click="save" :loading="isLoading">保存</el-button>
                     <el-button type="success" round @click="toCenter" :loading="isLoading">个人中心</el-button>
+                    <el-button type="success" round @click="toBlog">个人博客</el-button>
                 </div>
             </div>
         </div>
@@ -138,11 +139,19 @@ export default defineComponent({
             })
         }
 
+        // 个人博客
+        const toBlog = (): void =>{
+            router.push({
+                name: 'Blog'
+            })
+        }
+
         return {
             exit,
             save,
             toCenter,
             choiceHeader,
+            toBlog,
             img,
             ...toRefs(state)
         }
@@ -298,8 +307,8 @@ input::-webkit-input-placeholder {
     }
 
     .avatar {
-        //    width: 100px;
-        height: 100px;
+           width: 100px;
+        // height: 100px;
     }
 
     .user-info-header {

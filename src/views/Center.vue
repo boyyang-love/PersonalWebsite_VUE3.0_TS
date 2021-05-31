@@ -3,8 +3,30 @@
         <div class="header">
             <el-page-header @back="goBack" content="背景图片"></el-page-header>
         </div>
-        <el-timeline>
-            <el-timeline-item v-for="(item, index) in images" :key="index" color="#ff461f">
+        <!-- PC -->
+        <div class="waterfall-flow pc" ref="pc" v-if="true">
+            <div class="img-box" v-for="(item, index) in images" :key="index">
+                <div class="icon">
+                    <i
+                        class="iconfont icon-xiazai1"
+                        @click="download(item.downloadUrl, item.fileid)"
+                    ></i>
+                    <i
+                        class="iconfont icon-qingchu"
+                        @click="del(item.tempFileURL, item._id, index)"
+                    ></i>
+                </div>
+                <img src="../assets/images/Blueocean01.png" v-lazy="item.tempFileURL" />
+            </div>
+        </div>
+        <!-- phone -->
+        <el-timeline class="phone">
+            <el-timeline-item
+                v-for="(item, index) in images"
+                :key="index"
+                color="#ff461f"
+                :reverse="true"
+            >
                 {{ item.name }}
                 <div class="download">
                     <div class="icon">
@@ -25,20 +47,34 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, h } from "vue";
+import { defineComponent, ref, h, nextTick, reactive, toRefs } from "vue";
 import { useRouter } from "vue-router";
 import { DB, IMG } from "@/db/index";
+// import { waterfallFlow } from "@/hooks/index";
 import { ElLoading, ElMessageBox, ElMessage } from "element-plus";
 export default defineComponent({
     name: "Center",
-    components: {},
+    components: {
+    },
     setup() {
         // 图片集合
         const images = ref<any[]>();
         const router = useRouter();
+        const pc = ref(null)
+        // 布局数据
+        const state = reactive({
+            layoutData: [],
+            layoutConfig: {
+                height: 100, // 默认高度
+                dialogVisible: false // 是否可拖拽或改变大小
+            }
 
+        })
         DB.findAll("usersBg").then((res: any) => {
-            images.value = res.data;
+            images.value = res.data.reverse();
+            // setTimeout(() => {
+            //     new waterfallFlow(pc.value)
+            // }, 200)
         });
 
         // 返回上一页
@@ -73,7 +109,7 @@ export default defineComponent({
                             });
                             images.value = []
                             DB.findAll("usersBg").then((res: any) => {
-                                images.value = res.data;
+                                images.value = res.data.reverse();
                             });
                         });
                     }
@@ -81,11 +117,14 @@ export default defineComponent({
             });
         };
 
+
         return {
             images,
             goBack,
             download,
             del,
+            pc,
+            ...toRefs(state)
         };
     },
 });
@@ -145,10 +184,52 @@ export default defineComponent({
     }
 }
 
+.waterfall-flow {
+    // display: grid;
+    // grid-template-columns: repeat(5, 1fr);
+    // justify-content: center;
+    // align-items: center;
+    -moz-column-count: 6;
+    /* Firefox */
+    -webkit-column-count: 6;
+    /* Safari 和 Chrome */
+    column-count: 6;
+    -moz-column-gap: 20px;
+    -webkit-column-gap: 20px;
+    column-gap: 20px;
+}
+
+.img-box {
+    display: block;
+    position: relative;
+
+    .icon {
+        position: absolute;
+        top: 5px;
+        right: 5px;
+
+        i {
+            font-size: 18px;
+            margin-right: 10px;
+        }
+    }
+}
+
+.phone {
+    display: none;
+}
 
 @media screen and (max-width: 700px) {
     .download {
         width: 100% !important;
+    }
+
+    .phone {
+        display: block;
+    }
+
+    .pc {
+        display: none;
     }
 }
 </style>
