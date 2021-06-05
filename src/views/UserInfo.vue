@@ -34,9 +34,9 @@
                     <input type="text" v-model="location.country" placeholder="国家" />
                 </div>
                 <div class="save">
-                    <el-button type="success" round @click="save" :loading="isLoading">保存</el-button>
-                    <el-button type="success" round @click="toCenter" :loading="isLoading">个人中心</el-button>
-                    <el-button type="success" round @click="toBlog">个人博客</el-button>
+                    <el-button type="success" round @click="save" :loading="isLoading">保存信息</el-button>
+                    <el-button type="success" round @click="toCenter" :loading="isLoading">背景图库</el-button>
+                    <el-button type="success" round @click="toBlog">个人动态</el-button>
                 </div>
             </div>
         </div>
@@ -289,8 +289,8 @@ input::-webkit-input-placeholder {
     }
 
     .user-info-box {
-        width: 85%;
-        height: 365px;
+        width: 95%;
+        height: 480px;
         overflow: hidden;
     }
 

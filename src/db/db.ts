@@ -57,7 +57,7 @@ class CloudBase {
     }
 
     // 通过条件查询
-    findWhere(name: string, options: object) {
+    findWhere(name: string, options: any) {
         return new Promise((resolve, reject) => {
             db.collection(name)
                 .where(options)
@@ -72,7 +72,7 @@ class CloudBase {
     }
 
     // 向集合插入一条数据
-    addNew(name: string, options: object) {
+    addNew(name: string, options: any) {
         return new Promise((resolve, reject) => {
             db.collection(name)
                 .add(options)
@@ -85,7 +85,7 @@ class CloudBase {
     }
 
     // 更新数据
-    update(name: string, _id: string, options: object) {
+    update(name: string, _id: string, options: any) {
         return new Promise((resolve, reject) => {
             db.collection(name)
                 .doc(_id)

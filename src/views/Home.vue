@@ -83,7 +83,7 @@
             <menu-bar :tabs="tabs"></menu-bar>
             <div class="bottom">
                 <div class="login">
-                    <i class="iconfont icon-denglu" @click="login"></i>
+                    <i class="iconfont icon-dongtai" @click="login"></i>
                 </div>
                 <div class="exit">
                     <i class="iconfont icon-tuichu1" @click="exit"></i>
@@ -126,12 +126,12 @@ export default defineComponent({
             {
                 tabIndex: 3,
                 tabName: "Center",
-                icon: "icon-A",
+                icon: "icon-dongtai1",
             },
             {
                 tabIndex: 4,
                 tabName: "Contact",
-                icon: "icon-lianxi",
+                icon: "icon-B",
             },
             {
                 tabIndex: 5,
@@ -184,6 +184,7 @@ export default defineComponent({
                     return
                 }
                 const file = img.value.files[0];
+                console.log(file)
                 isloading.value = true
                 IMG.picUpload(file, "usersBg").then((res: any) => {
                     if (res) {
