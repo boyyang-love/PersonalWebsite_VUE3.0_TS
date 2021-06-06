@@ -19,7 +19,7 @@
                 <div class="blog-mes">
                     <div class="blog-img-wrapper">
                         <div class="blog-img" v-for="(img, i) in item.imgs" :key="i">
-                            <img   src="../../src/assets/images/Blueocean01.png" v-lazy="img" alt />
+                            <img src="../../src/assets/images/Blueocean01.png" v-lazy="img" alt />
                         </div>
                     </div>
                     <div class="blog-text">
@@ -38,10 +38,12 @@
             <div class="alert-box">
                 <div class="img-up">
                     <el-upload
+                        :limit="5"
                         action="#"
                         list-type="picture-card"
                         :auto-upload="false"
                         :on-change="onChange"
+                        :file-list="filesList"
                     >
                         <template #default>
                             <i class="el-icon-plus"></i>
@@ -50,21 +52,21 @@
                             <div>
                                 <img class="el-upload-list__item-thumbnail" :src="file.url" alt />
                                 <span class="el-upload-list__item-actions">
-                                    <span
+                                    <!-- <span
                                         class="el-upload-list__item-preview"
                                         @click="handlePictureCardPreview(file)"
                                     >
                                         <i class="el-icon-zoom-in"></i>
-                                    </span>
-                                    <span
+                                    </span>-->
+                                    <!-- <span
                                         class="el-upload-list__item-delete"
                                         @click="handleDownload(file)"
                                     >
                                         <i class="el-icon-download"></i>
-                                    </span>
+                                    </span>-->
                                     <span
                                         class="el-upload-list__item-delete"
-                                        @click="handleRemove(file)"
+                                        @click="handleRemove(file, filesList)"
                                     >
                                         <i class="el-icon-delete"></i>
                                     </span>
@@ -111,11 +113,11 @@ export default defineComponent({
         const imgList = ref<string[]>([])  //图片列表
         const text = ref<string>()  //文字
         const state = reactive({
-            centerMes: []  //中心动态
+            centerMes: [],  //中心动态
+            filesList: []
         })
 
         // ------------state---------------------
-
 
         const init = () => {
             // 获取动态
@@ -136,28 +138,32 @@ export default defineComponent({
 
         // 圖片上傳
         const onChange = (e): void => {
-            isLoading.value = true
-            const file = e.raw
-            IMG.picUpload(file, 'userBlogImg', 'blog').then((res: any) => {
-                imgList.value.push(res.id)
-                isLoading.value = false
-            })
+            state.filesList.push(e)
         }
 
         // 上傳中心
         const uploadCenter = async () => {
             isLoading.value = true
+            // 上传图片获取图片id
+            const upLen = state.filesList.length
+            for (let j = 0; j < upLen; j++) {
+                const file = state.filesList[j].raw
+                const imgFile: any = await IMG.picUpload(file, 'userBlogImg', 'blog')
+                imgList.value.push(imgFile.id)
+            }
+
+
+            // 通过上边id 获取图片链接
             const len = imgList.value.length
             const lists = []
             for (let i = 0; i < len; i++) {
                 const res: any = await DB.findOne('userBlogImg', imgList.value[i])
                 lists.push(res.data[0].tempFileURL)
             }
+
+            // 获取用户信息 写入数据库
             AUTH.userInfo().then((res) => {
                 const info: any = res
-                console.log(info)
-                console.log(lists)
-
                 DB.addNew('usersCenter', {
                     text: text.value,
                     avatar: info.avatarUrl,
@@ -191,6 +197,13 @@ export default defineComponent({
 
         }
 
+        // 删除图片
+        const handleRemove = (file, filesList) => {
+            state.filesList = filesList.filter((item) => {
+                return file.uid != item.uid
+            })
+        }
+
 
 
         return {
@@ -202,6 +215,7 @@ export default defineComponent({
             onChange,
             uploadCenter,
             isLoading,
+            handleRemove,
             ...toRefs(state)
         }
     }
@@ -260,8 +274,8 @@ export default defineComponent({
 }
 
 .alert-box {
-    width: 50%;
-    height: 60%;
+    width: 42%;
+    min-height: 60%;
     border-radius: 10px;
     background-color: #fff;
     box-shadow: rgba(0, 0, 0, 0.187);
@@ -309,13 +323,13 @@ export default defineComponent({
 
 .header-img {
     box-sizing: border-box;
-    width: 150px;
-    height: 150px;
+    width: 100px;
+    height: 100px;
     border-radius: 100%;
     overflow: hidden;
     margin-left: 20px;
     margin-top: 20px;
-    border: 4px solid #f00056;
+    border: 1px solid #8f2449;
     box-shadow: 1px 2px 3px 1px rgba(0, 0, 0, 0.187);
     display: flex;
     justify-content: center;
@@ -386,23 +400,31 @@ export default defineComponent({
 .blog-text {
     margin-top: 20px;
     margin-left: 40px;
-    font-size: 20px;
+    font-size: 17px;
     margin-bottom: 20px;
+    color: #3d3b4f;
 }
 
 .name {
-    font-size: 20px;
+    font-size: 16px;
     color: #ff461f;
 }
 
 .position {
-    font-size: 18px;
+    font-size: 14px;
     color: salmon;
 }
 
 .time {
-    font-size: 16px;
+    font-size: 12px;
     color: #a1afc9;
+}
+
+.el-upload-list,
+.el-upload-list--picture-card {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    justify-items: center;
 }
 
 @media screen and (max-width: 400px) {
