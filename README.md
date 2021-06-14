@@ -2,12 +2,13 @@
 
 ## vue3.0 + ts + cloudbase 重构个人网站
 
-1. 之前为了学习vue3.0新语法特性，通过vue3.0 + js + cloudbase写了一个(个人网站)[https://personal-web-5gfvc908ac76abb1-1302829433.tcloudbaseapp.com/#/]
+1. 之前为了学习vue3.0新语法特性，通过vue3.0 + js + cloudbase写了一个(个人网站)[https://boyyang-8gwh66lj98a5fa60-1302829433.tcloudbaseapp.com/#/]
 
 2. 学习才能有进步，之前一直没有怎么接触ts,所以打算通过这次多学习学习ts的相关知识。
 
 3. 之前在学习中没有怎么封装过组件以及方法，所以这次学习的目的也希望能够多多锻炼这方面的能力
 
+4. (线上地址)[http://boyyanglove.web3v.vip/#/]
 
 ## Project setup
 
