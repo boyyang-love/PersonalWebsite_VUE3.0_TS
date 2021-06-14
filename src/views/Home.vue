@@ -16,7 +16,7 @@
         </div>
         <div class="content">
             <div class="title">
-                <h1>BOYYANG.LOVE</h1>
+                <h1 v-permission="['vip','admin']">BOYYANG.LOVE</h1>
                 <label for="input">
                     <input type="file" name id="input" accept="image/*" ref="img" @change="imgUp" />
                     <el-tooltip class="item" effect="dark" content="背景图片上传" placement="top-start">

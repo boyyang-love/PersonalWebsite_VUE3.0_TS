@@ -82,7 +82,7 @@ export default defineComponent({
     const musicplay = (id, pic): void => {
       getMusicUrl({ id: id }).then((res) => {
         const payload = { musicurl: res.data[0].url, musicpic: pic};
-        store.commit("changeUrl", payload);
+        store.commit("music/changeUrl", payload);
       });
     };
 

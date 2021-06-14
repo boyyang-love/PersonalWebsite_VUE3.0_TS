@@ -4,7 +4,7 @@
 </template>
 
 <script lang="ts">
-import Vue, { computed, defineComponent, ref } from "vue";
+import { computed, defineComponent, ref } from "vue";
 import MusicPlayer from "@/components/MusicPlayer/index.vue";
 import { useStore } from "vuex";
 export default defineComponent({
@@ -14,12 +14,14 @@ export default defineComponent({
     setup() {
         const store = useStore();
 
+        // console.log(store.getters.authList)
+
         const musicUrl = computed(() => {
-            return store.state.musicUrl;
+            return store.state.music.musicUrl;
         });
 
         const musicPic = computed(() => {
-            return store.state.musicPic;
+            return store.state.music.musicPic;
         });
 
         return {
@@ -72,12 +74,11 @@ export default defineComponent({
     background-color: #555;
 }
 
-
 @media screen and (max-width: 700px) {
     ::-webkit-scrollbar {
-    width: 2px;
-    height: 1px;
-    background-color: #f5f5f5;
-}
+        width: 2px;
+        height: 1px;
+        background-color: #f5f5f5;
+    }
 }
 </style>
