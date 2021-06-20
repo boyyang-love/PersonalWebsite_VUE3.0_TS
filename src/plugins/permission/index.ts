@@ -8,7 +8,6 @@
 import store from "@/store"
 export default {
       mounted(el: Element, binding: any) {
-            // console.log(el)
             const { value } = binding
             const authLists = store.getters.authList
             if (authLists && authLists.includes(...value)) {

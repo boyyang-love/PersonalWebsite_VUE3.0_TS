@@ -107,7 +107,7 @@ export default defineComponent({
                     beforeClose(action, instance, done) {
                         if (action == 'confirm') {
                             router.push({
-                                name: 'Center'
+                                name: 'Blog'
                             })
                             done()
                         } else {
